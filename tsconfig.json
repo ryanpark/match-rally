@@ -13,8 +13,25 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "paths": {
+      "@components": ["../components/"]
+    }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/post.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/api/post.js",
+    "pages",
+    "components",
+    "../components/",
+    "components/ui",
+    "styled-system",
+    "@shadow-panda",
+    "@shadow-panda/styled-system",
+    "@shadow-panda/@shadow-panda/styled-system/**/*",
+    "@shadow-panda/@shadow-panda/styled-system/*.*"
+  ],
   "exclude": ["node_modules"]
 }
