@@ -23,7 +23,13 @@ import { Textarea } from "./ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
 import { Badge } from "./ui/badge";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 // import { toast } from './ui/toast/use-toast'
 
 const FormSchema = z.object({
@@ -107,15 +113,20 @@ export default function EventForm() {
           name="city"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Which City ?</FormLabel>
-              <FormControl>
-                <Box display="flex">
-                  <Badge variant="outline">Sydney</Badge>
-                  <Badge variant="outline">Melbourne</Badge>
-                </Box>
-              </FormControl>
-              <FormDescription></FormDescription>
-              <FormMessage />
+              <FormLabel>Which city ?</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a City" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="Sydney">Sydney</SelectItem>
+                  <SelectItem value="Melbourne">Melbourne</SelectItem>
+                  <SelectItem value="Brisbane">Brisbane</SelectItem>
+                  <SelectItem value="Perth">Perth</SelectItem>
+                </SelectContent>
+              </Select>
             </FormItem>
           )}
         />
