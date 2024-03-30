@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prepare": "panda codegen"
+    "prepare": "panda codegen",
+    "panda-clean": "panda codegen --clean"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.11",
@@ -20,6 +21,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@shadow-panda/style-context": "^0.7.1",
+    "@supabase/supabase-js": "^2.41.1",
     "date-fns": "^3.6.0",
     "lucide-react": "^0.359.0",
     "mongodb": "^4.8.1",

@@ -18,6 +18,7 @@ export default defineConfig({
   exclude: [],
 
   // The output directory for your css system
+  // this fucked up
   // syntax: "template-literal",
   emitPackage: true,
   outdir: "@shadow-panda/styled-system",
