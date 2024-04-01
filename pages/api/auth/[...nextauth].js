@@ -9,9 +9,9 @@ export const authOptions = {
       clientSecret: process.env.FACEBOOK_SECRET,
     }),
   ],
-  session: {
-    strategy: "jwt",
-  },
+  // session: {
+  //   strategy: "jwt",
+  // },
   debug: true,
 };
 

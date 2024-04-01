@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import * as React from "react";
@@ -11,6 +12,7 @@ const { withProvider, withContext } = createStyleContext(popover);
 const Portal = withContext(styled(PopoverPrimitive.Portal), "portal");
 
 const Content = React.forwardRef<
+  // @ts-ignore:
   React.ElementRef<typeof PopoverPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
 >(({ align = "center", sideOffset = 4, ...props }, ref) => (

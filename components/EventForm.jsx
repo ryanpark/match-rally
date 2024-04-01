@@ -6,7 +6,6 @@ import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { css } from "@shadow-panda/styled-system/css";
-import { Box } from "@shadow-panda/styled-system/jsx";
 import { icon } from "@shadow-panda/styled-system/recipes";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
@@ -22,7 +21,6 @@ import {
 import { Textarea } from "./ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
-import { Badge } from "./ui/badge";
 import {
   Select,
   SelectContent,
@@ -51,11 +49,15 @@ const FormSchema = z.object({
 });
 
 export default function EventForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
+  const form =
+    useForm <
+    z.infer <
+    typeof FormSchema >>
+      {
+        resolver: zodResolver(FormSchema),
+      };
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  function onSubmit(data) {
     console.log(JSON.stringify(data, null, 2));
   }
 
@@ -110,7 +112,7 @@ export default function EventForm() {
         />
         <FormField
           control={form.control}
-          name="city"
+          name="location"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Which city ?</FormLabel>

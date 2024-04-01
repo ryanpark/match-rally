@@ -2,16 +2,12 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 
 export default function Example(event) {
-  console.log(event);
   return (
     <Dialog>
       <DialogTrigger>Open</DialogTrigger>

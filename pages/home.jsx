@@ -1,4 +1,4 @@
-import React, { useEffect, useInsertionEffect, useRef } from "react";
+import React, { useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -33,18 +33,6 @@ const addEvent = async () => {
   console.log(res);
 };
 
-interface EventsProps {
-  title: string;
-  start: string;
-}
-
-interface InfoProps {
-  event: {
-    title: string;
-    start: Date | null;
-  };
-}
-
 const openDialog = () => {
   console.log("open dialog");
 };
@@ -57,21 +45,21 @@ const renderEventContent = (info) => {
   );
 };
 
-export default function Calendar(events: EventsProps[]) {
-  const dStyle = `
-  @media screen and (max-width:767px) { .fc .fc-view-harness { height: 1200px!important} .fc-toolbar.fc-header-toolbar {flex-direction:column;} .fc-toolbar-chunk { display: table-row; text-align:center; padding:5px 0; } }
-    `;
-  useInsertionEffect(() => {
-    const styleEle = document.createElement("style");
-    styleEle.innerHTML = dStyle;
-    document.head.appendChild(styleEle);
-    return () => {
-      document.head.removeChild(styleEle);
-    };
-  }, []);
+export default function Calendar(events) {
+  // const dStyle = `
+  // @media screen and (max-width:767px) { .fc .fc-view-harness { height: 1200px!important} .fc-toolbar.fc-header-toolbar {flex-direction:column;} .fc-toolbar-chunk { display: table-row; text-align:center; padding:5px 0; } }
+  //   `;
+  // useInsertionEffect(() => {
+  //   const styleEle = document.createElement("style");
+  //   styleEle.innerHTML = dStyle;
+  //   document.head.appendChild(styleEle);
+  //   return () => {
+  //     document.head.removeChild(styleEle);
+  //   };
+  // }, []);
 
   const calRef = useRef(null);
-  const handleWindowResize = (view: any): void => {
+  const handleWindowResize = () => {
     const api = calRef?.current?.getApi();
     api?.changeView(
       window.innerWidth < 765 ? "dayGridFourWeek" : "dayGridMonth"
@@ -132,7 +120,7 @@ export default function Calendar(events: EventsProps[]) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps = async () => {
   try {
     const client = await clientPromise;
     const db = client.db("TennisMatchFinder");

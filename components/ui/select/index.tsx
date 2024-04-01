@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import * as React from "react";
@@ -10,6 +11,7 @@ import { select, icon } from "@shadow-panda/styled-system/recipes";
 const { withProvider, withContext } = createStyleContext(select);
 
 const Trigger = React.forwardRef<
+  // @ts-ignore:
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ children, ...props }, ref) => (
@@ -25,6 +27,7 @@ Trigger.displayName = SelectPrimitive.Trigger.displayName;
 const Viewport = withContext(SelectPrimitive.Viewport, "viewport");
 
 const Content = React.forwardRef<
+  // @ts-ignore:
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >(({ children, position = "popper", ...props }, ref) => (
@@ -47,6 +50,7 @@ const ItemIndicator = withContext(
 );
 
 const Item = React.forwardRef<
+  // @ts-ignore:
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 >(({ children, ...props }, ref) => (

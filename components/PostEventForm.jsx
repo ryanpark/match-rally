@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
@@ -10,15 +10,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import EventForm from "./EventForm";
-
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import { Box } from "@shadow-panda/styled-system/jsx";
-
-type Inputs = {
-  example: string;
-  exampleRequired: string;
-};
 
 export default function PostEventForm() {
   const {
@@ -26,8 +18,8 @@ export default function PostEventForm() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  } = useForm();
+
   return (
     <Dialog>
       <DialogTrigger>
