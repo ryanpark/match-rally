@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 import * as z from "zod";
 import { css } from "@shadow-panda/styled-system/css";
 import { icon } from "@shadow-panda/styled-system/recipes";
@@ -30,35 +31,35 @@ import {
 } from "./ui/select";
 // import { toast } from './ui/toast/use-toast'
 
-const FormSchema = z.object({
-  date: z.date({
-    required_error: "A date of birth is required.",
-  }),
-  time: z.string({
-    required_error: "time required.",
-  }),
-  location: z.string({
-    required_error: "location required.",
-  }),
-  level: z.string({
-    required_error: "level required.",
-  }),
-  message: z.string({
-    required_error: "message required.",
-  }),
-});
+const addEvent = async (event) => {
+  let res = await fetch("https://localhost:3000/api/post", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      start: event.date,
+      title: event.location,
+      city: event.city,
+      time: event.time,
+      user: event.session,
+      message: event.message,
+      level: event.level,
+    }),
+  });
+  res = await res.json();
+  console.log(res);
+};
 
 export default function EventForm() {
-  const form =
-    useForm <
-    z.infer <
-    typeof FormSchema >>
-      {
-        resolver: zodResolver(FormSchema),
-      };
+  const form = useForm();
+  const { data: session, status } = useSession();
 
-  function onSubmit(data) {
-    console.log(JSON.stringify(data, null, 2));
+  function onSubmit(formData) {
+    console.log(formData);
+    formData["session"] = session?.user?.name;
+    addEvent(formData);
+    console.log(JSON.stringify(formData, null, 2));
   }
 
   return (
@@ -112,7 +113,7 @@ export default function EventForm() {
         />
         <FormField
           control={form.control}
-          name="location"
+          name="city"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Which city ?</FormLabel>
@@ -132,20 +133,6 @@ export default function EventForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="time"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>What time do you want to play ?</FormLabel>
-              <FormControl>
-                <Input placeholder="Eg: 6: 00 pm" {...field} />
-              </FormControl>
-              <FormDescription></FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <FormField
           control={form.control}
@@ -161,6 +148,22 @@ export default function EventForm() {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="time"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>What time do you want to play ?</FormLabel>
+              <FormControl>
+                <Input placeholder="Eg: 6: 00 pm" {...field} />
+              </FormControl>
+              <FormDescription></FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="level"

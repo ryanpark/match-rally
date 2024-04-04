@@ -11,9 +11,6 @@ import PostEventForm from "../components/PostEventForm";
 import FacebookLogin from "../components/ui/loginButton";
 import { css } from "@shadow-panda/styled-system/css";
 import { Box } from "@shadow-panda/styled-system/jsx";
-import { Button } from "../components/ui/button";
-
-import { createClient } from "@supabase/supabase-js";
 
 const addEvent = async () => {
   let res = await fetch("https://localhost:3000/api/comment", {
@@ -66,26 +63,11 @@ export default function Calendar(events) {
     );
   };
 
-  const supabase = createClient(
-    "https://ppelekmixqezqnxwyaci.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwZWxla21peHFlenFueHd5YWNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE2NjIzOTMsImV4cCI6MjAyNzIzODM5M30.xjde4LYdTh4LmvGxl0HDgyShcII9-pXxOgIJhd0s8D8"
-  );
-
-  async function signInWithFacebook() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "facebook",
-    });
-
-    console.log(data);
-    console.log(error);
-  }
-
   return (
     <div>
       <Link href="/">Index</Link>
       <FacebookLogin />
       <PostEventForm />
-      <Button onClick={() => signInWithFacebook()}>Login Facebook shit</Button>
       <Box bg="brand">
         <FullCalendar
           ref={calRef}
@@ -124,7 +106,7 @@ export const getServerSideProps = async () => {
   try {
     const client = await clientPromise;
     const db = client.db("TennisMatchFinder");
-    const events = await db.collection("Users").find({}).limit(10).toArray();
+    const events = await db.collection("Events").find({}).limit(10).toArray();
     return {
       props: { events: JSON.parse(JSON.stringify(events)) },
     };

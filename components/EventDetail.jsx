@@ -8,17 +8,20 @@ import {
 } from "./ui/dialog";
 
 export default function Example(event) {
+  console.log(event);
   return (
     <Dialog>
       <DialogTrigger>Open</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {event?.event?.info?.event?.extendedProps?._id}
+            <p>{event?.event?.info?.event?.title}</p>
           </DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            <p>{event?.event?.info?.event?.extendedProps?.user}</p>
+            <p>{event?.event?.info?.event?.extendedProps?.time}</p>
+            <p>{event?.event?.info?.event?.extendedProps?.level}</p>
+            <p>{event?.event?.info?.event?.extendedProps?.message}</p>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

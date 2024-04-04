@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { title, start } = req.body;
+    const { title, start, city, time, user, message, level } = req.body;
 
     const client = new MongoClient(process.env.MONGODB_URI, {
       useNewUrlParser: true,
@@ -14,9 +14,17 @@ export default async function handler(req, res) {
       await client.connect();
       const database = client.db("TennisMatchFinder"); // Choose a name for your database
 
-      const collection = database.collection("Users"); // Choose a name for your collection
+      const collection = database.collection("Events"); // Choose a name for your collection
 
-      await collection.insertOne({ title, start });
+      await collection.insertOne({
+        title,
+        start,
+        city,
+        time,
+        user,
+        message,
+        level,
+      });
 
       res.status(201).json({ message: "Data saved successfully!" });
     } catch (error) {

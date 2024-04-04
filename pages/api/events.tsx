@@ -6,7 +6,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const client = await clientPromise;
     const db = client.db("TennisMatchFinder"); // Access the correct database
     const users = await db
-      .collection("Users") // Access the correct collection
+      .collection("Events") // Access the correct collection
       .find({}) // Assuming "metacritic" field exists in "Users" collection
       .limit(10)
       .toArray();
