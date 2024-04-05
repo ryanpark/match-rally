@@ -12,29 +12,8 @@ import FacebookLogin from "../components/ui/loginButton";
 import { css } from "@shadow-panda/styled-system/css";
 import { Box } from "@shadow-panda/styled-system/jsx";
 
-const addEvent = async () => {
-  let res = await fetch("https://localhost:3000/api/comment", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      userId: "65e2edea0c0103f7f4008876",
-      comments: {
-        user: "kevin",
-        comment: "third comment",
-      },
-    }),
-  });
-  res = await res.json();
-  console.log(res);
-};
-
-const openDialog = () => {
-  console.log("open dialog");
-};
-
 const renderEventContent = (info) => {
+  console.log(info);
   return (
     <div>
       <Example event={{ info }} />
