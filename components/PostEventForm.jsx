@@ -1,6 +1,6 @@
 "use client";
+import { useState } from "react";
 
-import { useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
@@ -13,15 +13,12 @@ import EventForm from "./EventForm";
 import { Box } from "@shadow-panda/styled-system/jsx";
 
 export default function PostEventForm() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-
+  const [open, setOpen] = useState(false);
+  const setModal = (state) => {
+    setOpen(!state);
+  };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Box bg="green" color="white">
           Post your next Match 🎾
@@ -33,7 +30,7 @@ export default function PostEventForm() {
             <h1>Post your next Match</h1>
           </DialogTitle>
           <DialogDescription>
-            <EventForm />
+            <EventForm setModal={setModal} />
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

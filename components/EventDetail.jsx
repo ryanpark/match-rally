@@ -5,6 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "./ui/dialog";
 import {
   Form,
@@ -21,28 +22,39 @@ import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 
 export default function Example(event) {
-  console.log(event);
   const form = useForm();
   const { data: session, status } = useSession();
   const userId = event?.event?.info?.event?.extendedProps?._id;
   const userName = session?.user?.name;
   const comments = event?.event?.info?.event?.extendedProps?.comments;
 
-  console.log(userName);
   const postComment = async (comment) => {
-    let res = await fetch("https://localhost:3000/api/comment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: userId,
-        comments: comment.comment,
-        userName: userName,
-      }),
-    });
-    res = await res.json();
-    console.log(res);
+    try {
+      let res = await fetch("https://localhost:3000/api/comment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          comments: comment.comment,
+          userName: userName,
+        }),
+      });
+
+      if (!res.ok) {
+        // handle non-successful responses
+        throw new Error(
+          `Failed to post comment: ${res.status} - ${res.statusText}`
+        );
+      }
+
+      res = await res.json();
+      console.log(res);
+    } catch (error) {
+      console.error("Error posting comment:", error);
+      // Handle error here, such as showing an error message to the user
+    }
   };
 
   function onSubmit(comment) {
@@ -80,34 +92,38 @@ export default function Example(event) {
             ))}
           </DialogDescription>
         </DialogHeader>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="comment"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>comment</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Leave your comment here"
-                      resize="none"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    <p></p>
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" alignSelf="flex-start">
-              Submit
-            </Button>
-          </form>
-        </Form>
+        {!userName && <div>Please login to make a comment</div>}
+        {userName && (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="comment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>comment</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Leave your comment here"
+                        resize="none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      <p></p>
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <DialogClose asChild>
+                <Button type="submit" alignSelf="flex-start">
+                  Submit
+                </Button>
+              </DialogClose>
+            </form>
+          </Form>
+        )}
       </DialogContent>
     </Dialog>
   );

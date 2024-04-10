@@ -26,9 +26,11 @@ export default async function handler(req, res) {
         level,
       });
 
-      res.status(201).json({ message: "Data saved successfully!" });
+      res
+        .status(201)
+        .json({ message: "Data saved successfully!", success: true });
     } catch (error) {
-      res.status(500).json({ message: "Something went wrong!" });
+      res.status(500).json({ message: "Something went wrong!", error: true });
     } finally {
       await client.close();
     }

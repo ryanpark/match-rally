@@ -10,7 +10,7 @@ const { withProvider, withContext } = createStyleContext(dialog);
 
 const DialogPortal = withContext(styled(DialogPrimitive.Portal), "portal");
 const DialogOverlay = withContext(styled(DialogPrimitive.Overlay), "overlay");
-const DialogClose = withContext(styled(DialogPrimitive.Close), "close");
+export const DialogClose = withContext(styled(DialogPrimitive.Close), "close");
 
 const Content = React.forwardRef<
   // @ts-ignore:
@@ -34,13 +34,14 @@ Content.displayName = DialogPrimitive.Content.displayName;
 export const Dialog = withProvider(styled(DialogPrimitive.Root), "root");
 export const DialogTrigger = withContext(
   styled(DialogPrimitive.Trigger),
-  "trigger",
+  "trigger"
 );
 export const DialogContent = withContext(styled(Content), "content");
 export const DialogHeader = withContext(styled("div"), "header");
 export const DialogFooter = withContext(styled("div"), "footer");
 export const DialogTitle = withContext(styled(DialogPrimitive.Title), "title");
+// export const DialogClose = withContext(styled(DialogPrimitive.Close), "close");
 export const DialogDescription = withContext(
   styled(DialogPrimitive.Description),
-  "description",
+  "description"
 );

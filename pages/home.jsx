@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -9,7 +9,6 @@ import { GetServerSideProps } from "next";
 import Example from "../components/EventDetail";
 import PostEventForm from "../components/PostEventForm";
 import FacebookLogin from "../components/ui/loginButton";
-import { css } from "@shadow-panda/styled-system/css";
 import { Box } from "@shadow-panda/styled-system/jsx";
 
 const renderEventContent = (info) => {
@@ -33,14 +32,24 @@ export default function Calendar(events) {
   //     document.head.removeChild(styleEle);
   //   };
   // }, []);
-
   const calRef = useRef(null);
-  const handleWindowResize = () => {
-    const api = calRef?.current?.getApi();
-    api?.changeView(
-      window.innerWidth < 765 ? "dayGridFourWeek" : "dayGridMonth"
-    );
-  };
+
+  useEffect(() => {
+    function handleResize() {
+      const api = calRef?.current?.getApi();
+      if (api) {
+        api.changeView(
+          window.innerWidth < 765 ? "dayGridFourWeek" : "dayGridMonth"
+        );
+      }
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div>
@@ -68,13 +77,11 @@ export default function Calendar(events) {
             left: "title",
             right:
               "resourceTimelineWeek,dayGridMonth, timeGridWeek, prev,next today",
-          }} // eventClick={(info) => openDialog(info)}
+          }}
           initialEvents={[
             { title: "nice event", start: new Date(), resourceId: "a" },
           ]}
-          // windowResize={handleWindowResize}
           events={events}
-          windowResize={handleWindowResize}
         />
       </Box>
     </div>
@@ -85,7 +92,7 @@ export const getServerSideProps = async () => {
   try {
     const client = await clientPromise;
     const db = client.db("TennisMatchFinder");
-    const events = await db.collection("Events").find({}).limit(10).toArray();
+    const events = await db.collection("Events").find({}).limit(100).toArray();
     return {
       props: { events: JSON.parse(JSON.stringify(events)) },
     };
