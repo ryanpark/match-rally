@@ -88,6 +88,7 @@ export default function EventForm({ setModal }) {
   // const form = useForm();
   const [submit, setSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -105,6 +106,7 @@ export default function EventForm({ setModal }) {
     formData.session = session?.user?.name;
     const result = await addEvent(formData);
     if (result === "error") {
+      setError(true);
       alert("shit happend");
     } else {
       setSubmit(true);

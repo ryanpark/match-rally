@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -5,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "./ui/dialog";
 import {
   Form,
@@ -16,56 +16,74 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
+import { Box } from "@shadow-panda/styled-system/jsx";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
+import Spinner from "@atlaskit/spinner";
 
-export default function Example(event) {
+const postComment = async (userData) => {
+  const {
+    userName,
+    userId,
+    comment: { comment },
+  } = userData;
+  try {
+    let res = await fetch("https://localhost:3000/api/comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: userId,
+        comments: comment,
+        userName: userName,
+      }),
+    });
+    res = await res.json();
+
+    if (res.error) {
+      return "error";
+      // throw new Error(`Failed to add event: ${res.status} - ${res.statusText}`);
+    }
+    if (res.success) {
+      return res;
+    }
+  } catch (error) {
+    return "error";
+  }
+};
+
+export default function EventDetails(event) {
   const form = useForm();
+  const [submit, setSubmit] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const { data: session, status } = useSession();
   const userId = event?.event?.info?.event?.extendedProps?._id;
   const userName = session?.user?.name;
   const comments = event?.event?.info?.event?.extendedProps?.comments;
 
-  const postComment = async (comment) => {
-    try {
-      let res = await fetch("https://localhost:3000/api/comment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          comments: comment.comment,
-          userName: userName,
-        }),
+  async function onSubmit(comment) {
+    if (comment && userName) {
+      setLoading(true);
+      const result = await postComment({
+        comment,
+        userId,
+        userName,
       });
 
-      if (!res.ok) {
-        // handle non-successful responses
-        throw new Error(
-          `Failed to post comment: ${res.status} - ${res.statusText}`
-        );
+      if (result.error) {
+        setError(true);
+        alert("shit happend");
       }
-
-      res = await res.json();
-      console.log(res);
-    } catch (error) {
-      console.error("Error posting comment:", error);
-      // Handle error here, such as showing an error message to the user
-    }
-  };
-
-  function onSubmit(comment) {
-    if (comment && userName) {
-      postComment(comment);
-    } else {
-      alert("no logged");
+      if (result.success) {
+        setLoading(false);
+        setSubmit(true);
+      }
     }
   }
-
-  console.log(userId);
 
   return (
     <Dialog>
@@ -93,7 +111,14 @@ export default function Example(event) {
           </DialogDescription>
         </DialogHeader>
         {!userName && <div>Please login to make a comment</div>}
-        {userName && (
+
+        {loading && (
+          <Box align="center" padding="10">
+            <Spinner interactionName="load" size="large" />
+          </Box>
+        )}
+        {!loading && submit && <p>Thank you. Your comment has been posted</p>}
+        {userName && !loading && !submit && (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
@@ -116,11 +141,9 @@ export default function Example(event) {
                   </FormItem>
                 )}
               />
-              <DialogClose asChild>
-                <Button type="submit" alignSelf="flex-start">
-                  Submit
-                </Button>
-              </DialogClose>
+              <Button type="submit" alignSelf="flex-start">
+                Submit
+              </Button>
             </form>
           </Form>
         )}

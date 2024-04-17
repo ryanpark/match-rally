@@ -3,16 +3,15 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import CustomView from "../../plugin/customView";
 import Link from "next/link";
-import clientPromise from "../lib/mongodb";
-import { GetServerSideProps } from "next";
-import EventDetails from "../components/EventDetail";
-import PostEventForm from "../components/PostEventForm";
-import FacebookLogin from "../components/ui/loginButton";
+import clientPromise from "../../lib/mongodb";
+import EventDetails from "../../components/EventDetail";
+import PostEventForm from "../../components/PostEventForm";
+import FacebookLogin from "../../components/ui/loginButton";
 import { Box } from "@shadow-panda/styled-system/jsx";
 
 const renderEventContent = (info) => {
-  console.log(info);
   return (
     <div>
       <EventDetails event={{ info }} />
@@ -37,10 +36,9 @@ export default function Calendar(events) {
   useEffect(() => {
     function handleResize() {
       const api = calRef?.current?.getApi();
+      console.log(api);
       if (api) {
-        api.changeView(
-          window.innerWidth < 765 ? "dayGridFourWeek" : "dayGridMonth"
-        );
+        api.changeView(window.innerWidth < 765 ? "custom" : "dayGridMonth");
       }
     }
     handleResize();
@@ -52,49 +50,50 @@ export default function Calendar(events) {
   }, []);
 
   return (
-    <div>
+    <Box bg="brand" p={10} color="black" height="100vh">
       <Link href="/">Index</Link>
       <FacebookLogin />
       <PostEventForm />
-      <Box bg="brand">
-        <FullCalendar
-          ref={calRef}
-          plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-          initialView="dayGridFourWeek"
-          views={{
-            dayGridFourWeek: {
-              type: "dayGrid",
-              duration: { days: 4 },
-            },
-          }}
-          editable={true}
-          selectable={true}
-          // height={"1000px"}
-          aspectRatio={2 / 1.5}
-          // initialView="dayGridWeek"
-          eventContent={(info) => renderEventContent(info)}
-          headerToolbar={{
-            left: "title",
-            right:
-              "resourceTimelineWeek,dayGridMonth, timeGridWeek, prev,next today",
-          }}
-          initialEvents={[
-            { title: "nice event", start: new Date(), resourceId: "a" },
-          ]}
-          events={events}
-        />
-      </Box>
-    </div>
+      <FullCalendar
+        ref={calRef}
+        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin, CustomView]}
+        initialView="dayGridMonth"
+        views={{
+          custom: {
+            type: "custom",
+            duration: { days: 14 },
+          },
+        }}
+        editable={true}
+        selectable={true}
+        aspectRatio={1 / 1.5}
+        eventContent={(info) => renderEventContent(info)}
+        headerToolbar={{
+          left: "title",
+          right:
+            "resourceTimelineWeek,dayGridMonth, timeGridWeek, prev,next today",
+        }}
+        initialEvents={[
+          { title: "nice event", start: new Date(), resourceId: "a" },
+        ]}
+        events={events}
+      />
+    </Box>
   );
 }
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async (context) => {
   try {
     const client = await clientPromise;
     const db = client.db("TennisMatchFinder");
-
-    const events = await db.collection("Events").find({}).limit(100).toArray();
-    console.log(params);
+    const { city } = context.params;
+    const cityName = city.charAt(0).toUpperCase() + city.slice(1);
+    const events = await db
+      .collection("Events")
+      .find({ city: cityName })
+      .limit(100)
+      .toArray();
+    console.log(city);
     return {
       props: { events: JSON.parse(JSON.stringify(events)) },
     };

@@ -26,7 +26,11 @@ export default defineConfig({
     extend: {
       tokens: {
         colors: {
-          brand: { value: "#0091d2" },
+          brand: { value: "#27AE60" },
+          primary: { value: "#B9E506" },
+          white: { value: "#fff" },
+          black: { value: "#353535" },
+          yellow: { value: "#FFF500" },
         },
       },
     },
