@@ -4,7 +4,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CustomView from "../../plugin/customView";
-import Link from "next/link";
 import clientPromise from "../../lib/mongodb";
 import EventDetails from "../../components/EventDetail";
 import PostEventForm from "../../components/PostEventForm";
@@ -51,7 +50,8 @@ export default function Calendar(events) {
 
   return (
     <Box bg="brand" p={10} color="black" height="100vh">
-      <Link href="/">Index</Link>
+      <img src="/logo.svg" alt="Match Points" />
+
       <FacebookLogin />
       <PostEventForm />
       <FullCalendar
@@ -70,8 +70,7 @@ export default function Calendar(events) {
         eventContent={(info) => renderEventContent(info)}
         headerToolbar={{
           left: "title",
-          right:
-            "resourceTimelineWeek,dayGridMonth, timeGridWeek, prev,next today",
+          right: "today prev,next",
         }}
         initialEvents={{}}
         events={events}

@@ -33,6 +33,9 @@ export default defineConfig({
           black: { value: "#353535" },
           yellow: { value: "#FFF500" },
         },
+        fonts: {
+          body: { value: "system-ui, sans-serif" },
+        },
       },
     },
   },

@@ -45,13 +45,17 @@ const DateRange = ({ startDate, endDate, events }) => {
 
   return (
     <Box height={"100%"}>
-      <h2>
-        Dates between {start.toLocaleDateString("en-AU")} and{" "}
-        {end.toLocaleDateString("en-AU")}
-      </h2>
-      <Grid columns={3} height={"100%"}>
+      <Grid columns={3} height={"100%"} gap={0}>
         {formattedDates.map((formattedDate, index) => (
-          <Box key={index} border={1} borderColor={"white"} borderStyle="solid">
+          <Box
+            key={index}
+            border={1}
+            borderColor={"white"}
+            borderStyle="solid"
+            color="white"
+            padding="2"
+            backgroundColor={"rgba(255, 255, 255, 15%)"}
+          >
             {formattedDate}
           </Box>
         ))}
@@ -76,17 +80,12 @@ function CustomView(props) {
 
   return (
     <>
-      <div className="view-title">
-        {props.dateProfile.currentRange.start.toUTCString()}
-      </div>
       <DateRange startDate={start} endDate={end} events={segs} />
       {/* <ul>
         {segs.map((seg) => (
           <li>{seg.def.title}</li>
         ))}
       </ul> */}
-
-      <div className="view-events">{segs.length} events</div>
     </>
   );
 }
