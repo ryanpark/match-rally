@@ -61,7 +61,7 @@ export default function Calendar(events) {
         views={{
           custom: {
             type: "custom",
-            duration: { days: 14 },
+            duration: { days: 7 },
           },
         }}
         editable={true}
@@ -73,9 +73,7 @@ export default function Calendar(events) {
           right:
             "resourceTimelineWeek,dayGridMonth, timeGridWeek, prev,next today",
         }}
-        initialEvents={[
-          { title: "nice event", start: new Date(), resourceId: "a" },
-        ]}
+        initialEvents={{}}
         events={events}
       />
     </Box>

@@ -10,6 +10,7 @@ export default defineConfig({
     "./components/**/*.{ts,tsx,js,jsx}",
     "./components/ui/**/*.{ts,tsx,js,jsx}",
     "./pages/**/*.{ts,tsx,js,jsx}",
+    "./plugin/**/*.{ts,tsx,js,jsx}",
   ],
   // Use React
   jsxFramework: "react",

@@ -55,15 +55,25 @@ const postComment = async (userData) => {
   }
 };
 
-export default function EventDetails(event) {
+export default function EventDetails({ event }) {
   const form = useForm();
   const [submit, setSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { data: session, status } = useSession();
-  const userId = event?.event?.info?.event?.extendedProps?._id;
-  const userName = session?.user?.name;
-  const comments = event?.event?.info?.event?.extendedProps?.comments;
+  const {
+    _id: userId,
+    comments,
+    user,
+    time,
+    level,
+    message,
+    comment,
+  } = event?.info?.event?.extendedProps ||
+  event?.info?.def?.extendedProps ||
+  {};
+  const userName = session?.user.name;
+  const title = event?.info?.event?.title || event?.info?.def?.title || "title";
 
   async function onSubmit(comment) {
     if (comment && userName) {
@@ -84,23 +94,21 @@ export default function EventDetails(event) {
       }
     }
   }
-
+  console.log(event);
   return (
     <Dialog>
-      <DialogTrigger>
-        {event?.event?.info?.event?.title || "title"}
-      </DialogTrigger>
+      <DialogTrigger>{title || "title"}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <p>{event?.event?.info?.event?.title}</p>
+            <p>{event?.info?.event?.title}</p>
           </DialogTitle>
           <DialogDescription>
-            <p>{event?.event?.info?.event?.extendedProps?.user}</p>
-            <p>{event?.event?.info?.event?.extendedProps?.time}</p>
-            <p>{event?.event?.info?.event?.extendedProps?.level}</p>
-            <p>{event?.event?.info?.event?.extendedProps?.message}</p>
-            <p>{event?.event?.info?.event?.extendedProps?.comment}</p>
+            <p>{user}</p>
+            <p>{time}</p>
+            <p>{level}</p>
+            <p>{message}</p>
+            <p>{comment}</p>
             {comments?.map((item, index) => (
               <div key={index}>
                 <p>User: {item.user}</p>

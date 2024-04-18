@@ -78,9 +78,7 @@ export default function Calendar(events) {
             right:
               "resourceTimelineWeek,dayGridMonth, timeGridWeek, prev,next today",
           }}
-          initialEvents={[
-            { title: "nice event", start: new Date(), resourceId: "a" },
-          ]}
+          initialEvents={[{}]}
           events={events}
         />
       </Box>
