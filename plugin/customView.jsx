@@ -17,7 +17,7 @@ const DateRange = ({ startDate, endDate, events }) => {
     const formatter = new Intl.DateTimeFormat("en-AU", {
       weekday: "short",
       day: "2-digit",
-      month: "2-digit",
+      // month: "2-digit",
     });
     const formattedDate = formatter.format(date);
 
@@ -45,13 +45,22 @@ const DateRange = ({ startDate, endDate, events }) => {
 
   return (
     <Box height={"100%"}>
-      <Grid columns={3} height={"100%"} gap={0}>
+      <Grid
+        columns={3}
+        height={"100%"}
+        gap={0.5}
+        background="none"
+        borderStyle={"solid"}
+        borderColor="white"
+        border={1}
+      >
         {formattedDates.map((formattedDate, index) => (
           <Box
             key={index}
-            border={1}
-            borderColor={"white"}
-            borderStyle="solid"
+            // borderRight={1}
+            // borderTop={1}
+            // borderColor={"white"}
+            // borderStyle="solid"
             color="white"
             padding="2"
             backgroundColor={"rgba(255, 255, 255, 15%)"}

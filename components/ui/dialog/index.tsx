@@ -23,7 +23,7 @@ const Content = React.forwardRef<
       {children}
       <DialogClose>
         <div>x</div>
-        // @ts-ignore:
+
         <span className={css({ srOnly: true })}>Close</span>
       </DialogClose>
     </DialogPrimitive.Content>

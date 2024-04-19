@@ -28,7 +28,7 @@ export default defineConfig({
       tokens: {
         colors: {
           brand: { value: "#27AE60" },
-          primary: { value: "#B9E506" },
+          greeny: { value: "#B9E506" },
           white: { value: "#fff" },
           black: { value: "#353535" },
           yellow: { value: "#FFF500" },

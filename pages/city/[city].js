@@ -49,11 +49,14 @@ export default function Calendar(events) {
   }, []);
 
   return (
-    <Box bg="brand" p={10} color="black" height="100vh">
-      <img src="/logo.svg" alt="Match Points" />
-
-      <FacebookLogin />
-      <PostEventForm />
+    <Box bg="brand" p={10} color="black" height="100%">
+      <Box display="flex" justifyContent={"space-between"} ml={"-15px"}>
+        <img src="/logo.svg" alt="Match Points" />
+        <PostEventForm />
+      </Box>
+      <Box display="flex" justifyContent={"flex-end"}>
+        <FacebookLogin />
+      </Box>
       <FullCalendar
         ref={calRef}
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin, CustomView]}

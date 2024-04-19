@@ -20,10 +20,18 @@ export default function PostEventForm() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Box bg="green" color="white">
-          Post your next Match 🎾
+        <Box
+          bg="greeny"
+          color="black"
+          p={2}
+          rounded={8}
+          cursor="pointer"
+          fontWeight="bold"
+        >
+          Post a Match
         </Box>
       </DialogTrigger>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>

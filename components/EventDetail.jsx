@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { Box } from "@shadow-panda/styled-system/jsx";
+import { Box, Circle } from "@shadow-panda/styled-system/jsx";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { useForm } from "react-hook-form";
@@ -73,7 +73,7 @@ export default function EventDetails({ event }) {
   event?.info?.def?.extendedProps ||
   {};
   const userName = session?.user.name;
-  const title = event?.info?.event?.title || event?.info?.def?.title || "title";
+  const title = event?.info?.event?.title || event?.info?.def.title || "title";
 
   async function onSubmit(comment) {
     if (comment && userName) {
@@ -97,7 +97,11 @@ export default function EventDetails({ event }) {
   console.log(event);
   return (
     <Dialog>
-      <DialogTrigger>{title || "title"}</DialogTrigger>
+      <DialogTrigger>
+        <Box display="flex" alignItems="center">
+          <Circle size="2" bg="yellow" mr="2" ml="2" /> {title || "title"}
+        </Box>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
