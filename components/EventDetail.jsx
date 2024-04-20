@@ -16,44 +16,15 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
+import postComment from "../actions/postComment";
 import { Box, Circle } from "@shadow-panda/styled-system/jsx";
+import { css } from "@shadow-panda/styled-system/css";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import Spinner from "@atlaskit/spinner";
-
-const postComment = async (userData) => {
-  const {
-    userName,
-    userId,
-    comment: { comment },
-  } = userData;
-  try {
-    let res = await fetch("https://localhost:3000/api/comment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: userId,
-        comments: comment,
-        userName: userName,
-      }),
-    });
-    res = await res.json();
-
-    if (res.error) {
-      return "error";
-      // throw new Error(`Failed to add event: ${res.status} - ${res.statusText}`);
-    }
-    if (res.success) {
-      return res;
-    }
-  } catch (error) {
-    return "error";
-  }
-};
+import { CircleUserRound } from "lucide-react";
 
 export default function EventDetails({ event }) {
   const form = useForm();
@@ -68,7 +39,6 @@ export default function EventDetails({ event }) {
     time,
     level,
     message,
-    comment,
   } = event?.info?.event?.extendedProps ||
   event?.info?.def?.extendedProps ||
   {};
@@ -94,7 +64,9 @@ export default function EventDetails({ event }) {
       }
     }
   }
-  console.log(event);
+
+  console.log(comments);
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -105,19 +77,48 @@ export default function EventDetails({ event }) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <p>{event?.info?.event?.title}</p>
+            <p className={css({ padding: "10px 0 10px 0" })}>
+              {" "}
+              👋 Hey, Wanna play ? 🎾
+            </p>
           </DialogTitle>
+          <hr />
           <DialogDescription>
-            <p>{user}</p>
-            <p>{time}</p>
-            <p>{level}</p>
-            <p>{message}</p>
-            <p>{comment}</p>
+            <p className={css({ padding: "10px 0 10px 0" })}>
+              Where{" "}
+              <span className={css({ fontWeight: "bold" })}>
+                {event?.info?.event?.title}
+              </span>
+            </p>
+            <p className={css({ padding: "10px 0 10px 0" })}>
+              Who <span className={css({ fontWeight: "bold" })}>{user}</span>
+            </p>
+            <p className={css({ padding: "10px 0 10px 0" })}>
+              When <span className={css({ fontWeight: "bold" })}>{time}</span>
+            </p>
+            <p className={css({ padding: "10px 0 10px 0" })}>
+              Level <span className={css({ fontWeight: "bold" })}>{level}</span>
+            </p>
+            <p className={css({ padding: "10px 0 10px 0" })}>{message}</p>
+
             {comments?.map((item, index) => (
               <div key={index}>
-                <p>User: {item.user}</p>
-                <p>Comment: {item.comment}</p>
-                <hr />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  gap="2"
+                  paddingTop="10px"
+                >
+                  <CircleUserRound /> {item.user}
+                  <Box
+                    background="white"
+                    color="black"
+                    padding="3"
+                    borderRadius="5"
+                  >
+                    {item.comment}
+                  </Box>
+                </Box>
               </div>
             ))}
           </DialogDescription>
@@ -138,7 +139,6 @@ export default function EventDetails({ event }) {
                 name="comment"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>comment</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Leave your comment here"
@@ -153,9 +153,9 @@ export default function EventDetails({ event }) {
                   </FormItem>
                 )}
               />
-              <Button type="submit" alignSelf="flex-start">
-                Submit
-              </Button>
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="submit">Submit</Button>
+              </Box>
             </form>
           </Form>
         )}
