@@ -1,14 +1,17 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import getWeather from "../../actions/getWeather";
+import WeatherLists from "../../components/WeatherLists";
 import CustomView from "../../plugin/customView";
 import clientPromise from "../../lib/mongodb";
 import EventDetails from "../../components/EventDetail";
 import PostEventForm from "../../components/PostEventForm";
 import FacebookLogin from "../../components/ui/loginButton";
 import { Box } from "@shadow-panda/styled-system/jsx";
+import { css } from "@shadow-panda/styled-system/css";
 
 const renderEventContent = (info) => {
   return (
@@ -19,23 +22,12 @@ const renderEventContent = (info) => {
 };
 
 export default function Calendar(events) {
-  // const dStyle = `
-  // @media screen and (max-width:767px) { .fc .fc-view-harness { height: 1200px!important} .fc-toolbar.fc-header-toolbar {flex-direction:column;} .fc-toolbar-chunk { display: table-row; text-align:center; padding:5px 0; } }
-  //   `;
-  // useInsertionEffect(() => {
-  //   const styleEle = document.createElement("style");
-  //   styleEle.innerHTML = dStyle;
-  //   document.head.appendChild(styleEle);
-  //   return () => {
-  //     document.head.removeChild(styleEle);
-  //   };
-  // }, []);
   const calRef = useRef(null);
+  const [weather, setWeather] = useState([]);
 
   useEffect(() => {
     function handleResize() {
       const api = calRef?.current?.getApi();
-      console.log(api);
       if (api) {
         api.changeView(window.innerWidth < 765 ? "custom" : "dayGridMonth");
       }
@@ -48,13 +40,45 @@ export default function Calendar(events) {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchWeatherData = async () => {
+      try {
+        const results = await getWeather();
+        setWeather(results.list);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchWeatherData();
+  }, []);
+
+  console.log(weather);
   return (
-    <Box bg="brand" p={10} color="black" height="100%">
-      <Box display="flex" justifyContent={"space-between"} ml={"-15px"}>
-        <img src="/logo.svg" alt="Match Points" />
+    <div
+      className={css({
+        color: "black",
+        height: "100%",
+        padding: "10px",
+        lg: { padding: "15px" },
+        sm: { padding: "10px" },
+      })}
+    >
+      <Box
+        display="flex"
+        justifyContent={"space-between"}
+        ml={"-15px"}
+        alignItems={"center"}
+      >
+        <img
+          className={css({ width: "250px", sm: { width: "400px" } })}
+          src="/logo.svg"
+          alt="Match Points"
+        />
+        <WeatherLists lists={weather} />
         <PostEventForm />
       </Box>
-      <Box display="flex" justifyContent={"flex-end"}>
+      <Box display="flex" justifyContent={"flex-end"} mb={"2"}>
         <FacebookLogin />
       </Box>
       <FullCalendar
@@ -67,7 +91,7 @@ export default function Calendar(events) {
             duration: { days: 7 },
           },
         }}
-        editable={true}
+        editable={false}
         selectable={true}
         aspectRatio={1 / 1.5}
         eventContent={(info) => renderEventContent(info)}
@@ -78,7 +102,7 @@ export default function Calendar(events) {
         initialEvents={{}}
         events={events}
       />
-    </Box>
+    </div>
   );
 }
 
