@@ -15,3 +15,46 @@
   color: white;
   font-weight: bold;
 }
+
+.select__trigger {
+  background-color: white;
+}
+
+.dialog__content {
+  background: #27ae60;
+  color: #fff;
+}
+.dialog__description {
+  color: #fff;
+}
+.dialog__header {
+  text-align: left;
+}
+.textarea {
+  background: #353535;
+}
+.button--variant_default {
+  background: #b9e506;
+  color: #353535;
+  font-weight: bold;
+}
+
+body {
+  background: #27ae60;
+}
+
+@media screen and (min-width: 40rem) {
+  .fc .fc-toolbar-title {
+    font-size: 1.75em !important;
+  }
+  .fc .fc-toolbar.fc-header-toolbar {
+    margin-bottom: 1.5em;
+  }
+}
+.fc .fc-toolbar-title {
+  font-size: 1.25em;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 0.5em;
+}

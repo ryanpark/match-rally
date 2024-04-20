@@ -28,10 +28,12 @@ export default defineConfig({
       tokens: {
         colors: {
           brand: { value: "#27AE60" },
+          primary: { value: "red" },
           greeny: { value: "#B9E506" },
           white: { value: "#fff" },
           black: { value: "#353535" },
           yellow: { value: "#FFF500" },
+          blue: { value: "#45B1FF" },
         },
         fonts: {
           body: { value: "system-ui, sans-serif" },

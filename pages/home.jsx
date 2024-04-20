@@ -1,103 +1,108 @@
-import React, { useRef, useEffect } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import Link from "next/link";
-import clientPromise from "../lib/mongodb";
-import { GetServerSideProps } from "next";
-import EventDetails from "../components/EventDetail";
-import PostEventForm from "../components/PostEventForm";
-import FacebookLogin from "../components/ui/loginButton";
-import { Box } from "@shadow-panda/styled-system/jsx";
+import React from "react";
+import { css, cva } from "@shadow-panda/styled-system/css";
 
-const renderEventContent = (info) => {
-  console.log(info);
+const link = cva({
+  base: {
+    background: "greeny",
+    color: "black",
+    borderRadius: "5px",
+    fontWeight: "bold",
+    p: "10px",
+    mr: "10px",
+  },
+});
+
+export default function Home() {
   return (
-    <div>
-      <EventDetails event={{ info }} />
-    </div>
-  );
-};
+    <div
+      className={css({
+        bg: "blue",
+        height: "100vh",
+        color: "white",
+        p: "10px",
+      })}
+    >
+      <img
+        className={css({ width: "250px", sm: { width: "400px" } })}
+        src="/logo.svg"
+        alt="Match Points"
+      />
+      <div
+        className={css({
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          pt: "30px",
+        })}
+      >
+        <h1
+          className={css({
+            fontSize: "1.94em",
+            pt: "30px",
+            pl: "60px",
+            lineHeight: "1.2em",
+          })}
+        >
+          Find Your Next <br />
+          Forehand Friend.
+        </h1>
+        <nav>
+          <h1
+            className={css({
+              fontSize: "1.24em",
 
-export default function Calendar(events) {
-  // const dStyle = `
-  // @media screen and (max-width:767px) { .fc .fc-view-harness { height: 1200px!important} .fc-toolbar.fc-header-toolbar {flex-direction:column;} .fc-toolbar-chunk { display: table-row; text-align:center; padding:5px 0; } }
-  //   `;
-  // useInsertionEffect(() => {
-  //   const styleEle = document.createElement("style");
-  //   styleEle.innerHTML = dStyle;
-  //   document.head.appendChild(styleEle);
-  //   return () => {
-  //     document.head.removeChild(styleEle);
-  //   };
-  // }, []);
-  const calRef = useRef(null);
-
-  useEffect(() => {
-    function handleResize() {
-      const api = calRef?.current?.getApi();
-      if (api) {
-        api.changeView(
-          window.innerWidth < 765 ? "dayGridFourWeek" : "dayGridMonth"
-        );
-      }
-    }
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  return (
-    <div>
-      <Link href="/">Index</Link>
-      <FacebookLogin />
-      <PostEventForm />
-      <Box bg="brand">
-        <FullCalendar
-          ref={calRef}
-          plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-          initialView="dayGridFourWeek"
-          views={{
-            dayGridFourWeek: {
-              type: "dayGrid",
-              duration: { days: 4 },
-            },
-          }}
-          editable={true}
-          selectable={true}
-          // height={"1000px"}
-          aspectRatio={2 / 1.5}
-          // initialView="dayGridWeek"
-          eventContent={(info) => renderEventContent(info)}
-          headerToolbar={{
-            left: "title",
-            right:
-              "resourceTimelineWeek,dayGridMonth, timeGridWeek, prev,next today",
-          }}
-          initialEvents={[{}]}
-          events={events}
+              lineHeight: "2.5em",
+            })}
+          >
+            Choose your city
+          </h1>
+          <ul
+            className={css({
+              display: "flex",
+              mr: "120px",
+            })}
+          >
+            <li>
+              <a href="/city/Sydney" className={link()}>
+                Sydney
+              </a>
+            </li>
+            <li>
+              <a href="#" className={link()}>
+                Melbourne
+              </a>
+            </li>
+            <li>
+              <a href="#" className={link()}>
+                Brisbane
+              </a>
+            </li>
+            <li>
+              <a href="#" className={link()}>
+                Perth
+              </a>
+            </li>
+            <li>
+              <a href="#" className={link()}>
+                Canberra
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div
+        className={css({
+          display: "flex",
+          justifyContent: "center",
+          pt: "30px",
+        })}
+      >
+        <img
+          className={css({ mt: "70px", width: "1200px" })}
+          src="/hp.png"
+          alt="Match Points"
         />
-      </Box>
+      </div>
     </div>
   );
 }
-
-export const getServerSideProps = async ({ params }) => {
-  try {
-    const client = await clientPromise;
-    const db = client.db("TennisMatchFinder");
-
-    const events = await db.collection("Events").find({}).limit(100).toArray();
-    console.log(params);
-    return {
-      props: { events: JSON.parse(JSON.stringify(events)) },
-    };
-  } catch (e) {
-    console.error(e);
-    return { props: { events: [] } };
-  }
-};
