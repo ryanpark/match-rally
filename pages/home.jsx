@@ -94,14 +94,27 @@ export default function Home() {
         className={css({
           display: "flex",
           justifyContent: "center",
-          pt: "30px",
         })}
       >
-        <img
-          className={css({ mt: "70px", width: "1200px" })}
-          src="/hp.png"
-          alt="Match Points"
-        />
+        <div
+          className={css({
+            pt: "30px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          })}
+        >
+          <img
+            className={css({ mt: "70px", width: "1200px", mb: "-230px" })}
+            src="/heros.jpg"
+            alt="Match Points"
+          />
+          <img
+            className={css({ mt: "70px", width: "1200px" })}
+            src="/hp.png"
+            alt="Match Points"
+          />
+        </div>
       </div>
     </div>
   );
