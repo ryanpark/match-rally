@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import EventForm from "./EventForm";
+import { css } from "@shadow-panda/styled-system/css";
 import { Box } from "@shadow-panda/styled-system/jsx";
 
 export default function PostEventForm() {
@@ -35,11 +36,16 @@ export default function PostEventForm() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <h1>Post your next Match</h1>
+            <h1 className={css({ padding: "10px 0 10px 0" })}>
+              🎾 Share your match and let the crowd join in! 🧑👩
+            </h1>
           </DialogTitle>
-          <DialogDescription>
-            <EventForm setModal={setModal} />
-          </DialogDescription>
+          <hr />
+          <div className={css({ padding: "15px 0 10px 0" })}>
+            <DialogDescription>
+              <EventForm setModal={setModal} />
+            </DialogDescription>
+          </div>
         </DialogHeader>
       </DialogContent>
     </Dialog>

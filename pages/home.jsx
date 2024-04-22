@@ -17,103 +17,117 @@ export default function Home() {
     <div
       className={css({
         bg: "blue",
-        height: "100vh",
-        color: "white",
-        p: "10px",
+        height: "100%",
       })}
     >
-      <img
-        className={css({ width: "250px", sm: { width: "400px" } })}
-        src="/logo.svg"
-        alt="Match Points"
-      />
       <div
         className={css({
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          pt: "30px",
+          bg: "blue",
+          height: "100%",
+          width: "100%",
+          margin: "0 auto",
+          color: "white",
+          p: "10px",
+          sm: { maxWidth: "1320px" },
         })}
       >
-        <h1
-          className={css({
-            fontSize: "1.94em",
-            pt: "30px",
-            pl: "60px",
-            lineHeight: "1.2em",
-          })}
-        >
-          Find Your Next <br />
-          Forehand Friend.
-        </h1>
-        <nav>
-          <h1
-            className={css({
-              fontSize: "1.24em",
-
-              lineHeight: "2.5em",
-            })}
-          >
-            Choose your city
-          </h1>
-          <ul
-            className={css({
-              display: "flex",
-              mr: "120px",
-            })}
-          >
-            <li>
-              <a href="/city/Sydney" className={link()}>
-                Sydney
-              </a>
-            </li>
-            <li>
-              <a href="#" className={link()}>
-                Melbourne
-              </a>
-            </li>
-            <li>
-              <a href="#" className={link()}>
-                Brisbane
-              </a>
-            </li>
-            <li>
-              <a href="#" className={link()}>
-                Perth
-              </a>
-            </li>
-            <li>
-              <a href="#" className={link()}>
-                Canberra
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div
-        className={css({
-          display: "flex",
-          justifyContent: "center",
-        })}
-      >
+        <img
+          className={css({ width: "250px", sm: { width: "400px" } })}
+          src="/logo.svg"
+          alt="Match Points"
+        />
         <div
           className={css({
+            sm: {
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            },
+
+            display: "block",
             pt: "30px",
+          })}
+        >
+          <h1
+            className={css({
+              fontSize: "1.94em",
+              pt: "30px",
+              pl: "60px",
+              lineHeight: "1.2em",
+            })}
+          >
+            Find Your Next <br />
+            Forehand Friend.
+          </h1>
+          <nav>
+            <h1
+              className={css({
+                fontSize: "1.24em",
+
+                lineHeight: "2.5em",
+              })}
+            >
+              Choose your city
+            </h1>
+            <ul
+              className={css({
+                display: "flex",
+                mr: "120px",
+              })}
+            >
+              <li>
+                <a href="/city/Sydney" className={link()}>
+                  Sydney
+                </a>
+              </li>
+              <li>
+                <a href="#" className={link()}>
+                  Melbourne
+                </a>
+              </li>
+              <li>
+                <a href="#" className={link()}>
+                  Brisbane
+                </a>
+              </li>
+              <li>
+                <a href="#" className={link()}>
+                  Perth
+                </a>
+              </li>
+              <li>
+                <a href="#" className={link()}>
+                  Canberra
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div
+          className={css({
             display: "flex",
-            flexDirection: "column",
             justifyContent: "center",
           })}
         >
-          <img
-            className={css({ mt: "70px", width: "1200px", mb: "-230px" })}
-            src="/heros.jpg"
-            alt="Match Points"
-          />
-          <img
-            className={css({ mt: "70px", width: "1200px" })}
-            src="/hp.png"
-            alt="Match Points"
-          />
+          <div
+            className={css({
+              pt: "30px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            })}
+          >
+            <img
+              className={css({ mt: "70px", width: "1200px", mb: "-230px" })}
+              src="/heros.jpg"
+              alt="Match Points"
+            />
+            <img
+              className={css({ mt: "70px", width: "1200px" })}
+              src="/hp.png"
+              alt="Match Points"
+            />
+          </div>
         </div>
       </div>
     </div>

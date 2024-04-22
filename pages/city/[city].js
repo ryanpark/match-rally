@@ -57,51 +57,65 @@ export default function Calendar(events) {
   return (
     <div
       className={css({
-        color: "black",
-        height: "100%",
-        padding: "10px",
-        lg: { padding: "15px" },
-        sm: { padding: "10px" },
+        bg: "brand",
       })}
     >
-      <Box
-        display="flex"
-        justifyContent={"space-between"}
-        ml={"-15px"}
-        alignItems={"center"}
+      <div
+        className={css({
+          bg: "brand",
+
+          maxWidth: "1320px",
+          margin: "0 auto",
+          color: "white",
+          padding: "10px",
+          lg: { padding: "15px" },
+          sm: { padding: "10px" },
+        })}
       >
-        <img
-          className={css({ width: "250px", sm: { width: "400px" } })}
-          src="/logo.svg"
-          alt="Match Points"
+        <Box
+          display="flex"
+          justifyContent={"space-between"}
+          ml={"-15px"}
+          alignItems={"center"}
+        >
+          <img
+            className={css({ width: "250px", sm: { width: "400px" } })}
+            src="/logo.svg"
+            alt="Match Points"
+          />
+          <WeatherLists lists={weather} />
+          <PostEventForm />
+        </Box>
+        <Box display="flex" justifyContent={"flex-end"} mb={"2"}>
+          <FacebookLogin />
+        </Box>
+        <FullCalendar
+          ref={calRef}
+          plugins={[
+            dayGridPlugin,
+            interactionPlugin,
+            timeGridPlugin,
+            CustomView,
+          ]}
+          initialView="dayGridMonth"
+          views={{
+            custom: {
+              type: "custom",
+              duration: { days: 7 },
+            },
+          }}
+          editable={false}
+          selectable={true}
+          aspectRatio={1 / 1.5}
+          eventContent={(info) => renderEventContent(info)}
+          headerToolbar={{
+            left: "title",
+            right: "today prev,next",
+          }}
+          initialEvents={{}}
+          events={events}
         />
-        <WeatherLists lists={weather} />
-        <PostEventForm />
-      </Box>
-      <Box display="flex" justifyContent={"flex-end"} mb={"2"}>
-        <FacebookLogin />
-      </Box>
-      <FullCalendar
-        ref={calRef}
-        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin, CustomView]}
-        initialView="dayGridMonth"
-        views={{
-          custom: {
-            type: "custom",
-            duration: { days: 7 },
-          },
-        }}
-        editable={false}
-        selectable={true}
-        aspectRatio={1 / 1.5}
-        eventContent={(info) => renderEventContent(info)}
-        headerToolbar={{
-          left: "title",
-          right: "today prev,next",
-        }}
-        initialEvents={{}}
-        events={events}
-      />
+      </div>
     </div>
   );
 }

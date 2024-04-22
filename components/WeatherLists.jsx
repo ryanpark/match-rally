@@ -8,6 +8,7 @@ import {
   CloudLightning,
   CloudSnow,
   CloudFog,
+  CloudDrizzle,
 } from "lucide-react";
 import { css } from "@shadow-panda/styled-system/css";
 
@@ -18,6 +19,7 @@ const displayIcons = {
   brokenclouds: <Cloudy />,
   overcastclouds: <Cloudy />,
   showerrain: <CloudRainWind />,
+  lightrain: <CloudDrizzle />,
   rain: <CloudRain />,
   thunderstorm: <CloudLightning />,
   snow: <CloudSnow />,
@@ -31,7 +33,8 @@ const currentDay = daysOfWeek[currentDate.getDay()];
 const WeatherLists = ({ lists }) => {
   return (
     <div className={css({ display: "flex", gap: "10px" })}>
-      {lists.length > 0 &&
+      {lists &&
+        lists.length > 0 &&
         lists.map((list, index) => {
           let dayToDisplay;
           if (index === 0) {

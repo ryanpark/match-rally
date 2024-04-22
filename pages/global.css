@@ -27,11 +27,20 @@
 .dialog__description {
   color: #fff;
 }
+.dialog__close {
+  padding: 5px;
+}
 .dialog__header {
   text-align: left;
 }
+input,
+button {
+  color: #353535;
+}
 .textarea {
-  background: #353535;
+  background: #fff;
+  color: #353535;
+  caret-color: #353535;
 }
 .button--variant_default {
   background: #b9e506;
@@ -39,8 +48,11 @@
   font-weight: bold;
 }
 
-body {
+body,
+html,
+#__next {
   background: #27ae60;
+  /* height: 100%; */
 }
 
 @media screen and (min-width: 40rem) {
