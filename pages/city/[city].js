@@ -21,7 +21,7 @@ const renderEventContent = (info) => {
   );
 };
 
-export default function Calendar(events) {
+export default function Calendar({ events, city }) {
   const calRef = useRef(null);
   const [weather, setWeather] = useState([]);
 
@@ -53,7 +53,6 @@ export default function Calendar(events) {
     fetchWeatherData();
   }, []);
 
-  console.log(weather);
   return (
     <div
       className={css({
@@ -98,6 +97,11 @@ export default function Calendar(events) {
             CustomView,
           ]}
           initialView="dayGridMonth"
+          customButtons={{
+            cityName: {
+              text: city,
+            },
+          }}
           views={{
             custom: {
               type: "custom",
@@ -110,7 +114,8 @@ export default function Calendar(events) {
           eventContent={(info) => renderEventContent(info)}
           headerToolbar={{
             left: "title",
-            right: "today prev,next",
+            center: "cityName",
+            right: "today, prev,next",
           }}
           initialEvents={{}}
           events={events}
@@ -131,9 +136,8 @@ export const getServerSideProps = async (context) => {
       .find({ city: cityName })
       .limit(100)
       .toArray();
-    console.log(city);
     return {
-      props: { events: JSON.parse(JSON.stringify(events)) },
+      props: { events: JSON.parse(JSON.stringify(events)), city: cityName },
     };
   } catch (e) {
     console.error(e);

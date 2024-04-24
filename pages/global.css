@@ -70,3 +70,25 @@ html,
 .fc .fc-toolbar.fc-header-toolbar {
   margin-bottom: 0.5em;
 }
+
+.fc-toolbar-chunk .fc-cityName-button {
+  border: 1px solid white;
+}
+.fc-toolbar-chunk .fc-cityName-button:hover {
+  border: 1px solid white;
+}
+.fc-button {
+  background-color: red;
+}
+
+.dialog__trigger {
+  cursor: pointer;
+}
+.fc .fc-daygrid-event {
+  display: block;
+  width: 100%;
+
+  .dialog__trigger {
+    width: 100%;
+  }
+}
