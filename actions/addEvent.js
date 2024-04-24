@@ -1,6 +1,6 @@
 const addEvent = async (event) => {
   try {
-    let res = await fetch("https://localhost:3000/api/post", {
+    let res = await fetch("/api/post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import postComment from "../actions/postComment";
+import sendEmail from "../actions/sendEmail";
 import { Box, Circle } from "@shadow-panda/styled-system/jsx";
 import { css } from "@shadow-panda/styled-system/css";
 import { Button } from "./ui/button";
@@ -61,6 +62,7 @@ export default function EventDetails({ event }) {
       if (result.success) {
         setLoading(false);
         setSubmit(true);
+        sendEmail();
       }
     }
   }

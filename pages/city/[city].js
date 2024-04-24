@@ -12,6 +12,7 @@ import PostEventForm from "../../components/PostEventForm";
 import FacebookLogin from "../../components/ui/loginButton";
 import { Box } from "@shadow-panda/styled-system/jsx";
 import { css } from "@shadow-panda/styled-system/css";
+import send from "../api/send";
 
 const renderEventContent = (info) => {
   return (

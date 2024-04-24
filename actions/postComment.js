@@ -5,7 +5,7 @@ const postComment = async (userData) => {
     comment: { comment },
   } = userData;
   try {
-    let res = await fetch("https://localhost:3000/api/comment", {
+    let res = await fetch("/api/comment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
