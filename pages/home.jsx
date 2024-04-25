@@ -1,6 +1,6 @@
 import React from "react";
 import { css, cva } from "@shadow-panda/styled-system/css";
-///https://www.npmjs.com/package/react-multi-carousel
+import HomeCarousel from "../components/HomeCarousel";
 
 const link = cva({
   base: {
@@ -116,11 +116,7 @@ export default function Home() {
             justifyContent: "center",
           })}
         >
-          <img
-            className={css({ mt: "70px", width: "1200px" })}
-            src="/heros.jpg"
-            alt="Match Points"
-          />
+          <HomeCarousel />
           <div
             className={css({
               display: "flex",
