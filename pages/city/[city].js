@@ -12,7 +12,6 @@ import PostEventForm from "../../components/PostEventForm";
 import FacebookLogin from "../../components/ui/loginButton";
 import { Box } from "@shadow-panda/styled-system/jsx";
 import { css } from "@shadow-panda/styled-system/css";
-import send from "../api/send";
 
 const renderEventContent = (info) => {
   return (
@@ -58,6 +57,8 @@ export default function Calendar({ events, city }) {
     <div
       className={css({
         bg: "brand",
+        height: "100%",
+        sm: { height: "auto" },
       })}
     >
       <div
@@ -75,18 +76,17 @@ export default function Calendar({ events, city }) {
         <Box
           display="flex"
           justifyContent={"space-between"}
-          ml={"-15px"}
           alignItems={"center"}
         >
           <img
-            className={css({ width: "250px", sm: { width: "400px" } })}
+            className={css({ width: "200px", sm: { width: "400px" } })}
             src="/logo.svg"
             alt="Match Points"
           />
           <WeatherLists lists={weather} />
           <PostEventForm />
         </Box>
-        <Box display="flex" justifyContent={"flex-end"} mb={"2"}>
+        <Box display="flex" justifyContent={"flex-end"} mb={"2"} mt={"2"}>
           <FacebookLogin />
         </Box>
         <FullCalendar
@@ -113,6 +113,10 @@ export default function Calendar({ events, city }) {
           selectable={true}
           aspectRatio={1 / 1.5}
           eventContent={(info) => renderEventContent(info)}
+          titleFormat={{
+            month: "short",
+            day: "numeric",
+          }}
           headerToolbar={{
             left: "title",
             center: "cityName",

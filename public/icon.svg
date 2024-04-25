@@ -1,8 +1,4 @@
-<svg width="941" height="194" viewBox="0 0 941 194" fill="none" xmlns="http://www.w3.org/2000/svg">
-<text fill="#F5F5F5" xml:space="preserve" style="white-space: pre" font-family="Helvetica Neue" font-size="140" font-weight="300" letter-spacing="0em"><tspan x="611" y="150.56">Point</tspan></text>
-<text fill="#B9E506" xml:space="preserve" style="white-space: pre" font-family="Helvetica Neue" font-size="140" font-weight="bold" letter-spacing="0em"><tspan x="191" y="150.56">Match</tspan></text>
-<text xml:space="preserve" style="white-space: pre" font-family="Helvetica Neue" font-size="140" font-weight="300" letter-spacing="0em"><tspan x="611" y="150.56">Point</tspan></text>
-<text xml:space="preserve" style="white-space: pre" font-family="Helvetica Neue" font-size="140" font-weight="bold" letter-spacing="0em"><tspan x="191" y="150.56">Match</tspan></text>
+<svg width="139" height="194" viewBox="0 0 139 194" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M116.937 178.546C116.937 187.081 96.6863 194 71.7063 194C46.7264 194 26.4762 187.081 26.4762 178.546C26.4762 170.011 46.7264 163.092 71.7063 163.092C96.6863 163.092 116.937 170.011 116.937 178.546Z" fill="#1E6CA4"/>
 <path d="M69.5 177.709L21.645 118.823H117.355L69.5 177.709Z" fill="#B9E506"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M69.1767 178.356L118.002 118.823H20.675L69.1767 178.356ZM69.1767 172.157L110.565 118.823L27.7886 118.823L69.1767 172.157Z" fill="white"/>

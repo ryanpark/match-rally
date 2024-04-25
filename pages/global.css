@@ -51,8 +51,8 @@ button {
 body,
 html,
 #__next {
-  background: #27ae60;
-  /* height: 100%; */
+  /* background: #27ae60; */
+  height: 100%;
 }
 
 @media screen and (min-width: 40rem) {
