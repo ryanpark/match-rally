@@ -57,7 +57,6 @@ export default function EventDetails({ event }) {
 
       if (result.error) {
         setError(true);
-        alert("shit happend");
       }
       if (result.success) {
         setLoading(false);
@@ -66,9 +65,7 @@ export default function EventDetails({ event }) {
       }
     }
   }
-
-  console.log(comments);
-
+  if (error) return "Something went wrong, Please try again";
   return (
     <Dialog>
       <DialogTrigger>

@@ -77,7 +77,6 @@ export default function EventForm({ setModal }) {
     const result = await addEvent(formData);
     if (result === "error") {
       setError(true);
-      alert("shit happend");
     } else {
       setSubmit(true);
     }
@@ -86,7 +85,7 @@ export default function EventForm({ setModal }) {
   if (submit) {
     setModal(submit);
   }
-
+  if (error) return "Something went wrong, Please try again";
   return (
     <Form {...form}>
       {loading && (
