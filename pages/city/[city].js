@@ -78,11 +78,13 @@ export default function Calendar({ events, city }) {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <img
-            className={css({ width: "200px", sm: { width: "400px" } })}
-            src="/logo.svg"
-            alt="Match Points"
-          />
+          <a href="/home">
+            <img
+              className={css({ width: "200px", sm: { width: "400px" } })}
+              src="/logo.svg"
+              alt="Match Points"
+            />
+          </a>
           <WeatherLists lists={weather} />
           <PostEventForm />
         </Box>

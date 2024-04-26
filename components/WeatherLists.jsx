@@ -12,23 +12,26 @@ import {
 } from "lucide-react";
 import { css } from "@shadow-panda/styled-system/css";
 
-const displayIcons = {
-  clearsky: <SunDim />,
-  fewclouds: <CloudSun />,
-  scatteredclouds: <Cloud />,
-  brokenclouds: <Cloudy />,
-  overcastclouds: <Cloudy />,
-  showerrain: <CloudRainWind />,
-  lightrain: <CloudDrizzle />,
-  rain: <CloudRain />,
-  thunderstorm: <CloudLightning />,
-  snow: <CloudSnow />,
-  mist: <CloudFog />,
+const dayIcons = {
+  clearsky: <SunDim size="30" />,
+  fewclouds: <CloudSun size="30" />,
+  scatteredclouds: <Cloud size="30" />,
+  brokenclouds: <Cloudy size="30" />,
+  overcastclouds: <Cloudy size="30" />,
+  showerrain: <CloudRainWind size="30" />,
+  lightrain: <CloudDrizzle size="30" />,
+  rain: <CloudRain size="30" />,
+  thunderstorm: <CloudLightning size="30" />,
+  snow: <CloudSnow size="30" />,
+  mist: <CloudFog size="30" />,
+  moderaterain: <CloudDrizzle size="30" />,
 };
 
-const currentDate = new Date();
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const currentDay = daysOfWeek[currentDate.getDay()];
+const currentDate = new Date();
+const currentDayIndex = currentDate.getDay();
+const getNextDayIndex = (currentIndex) =>
+  (currentIndex + 1) % daysOfWeek.length;
 
 const WeatherLists = ({ lists }) => {
   return (
@@ -36,13 +39,10 @@ const WeatherLists = ({ lists }) => {
       {lists &&
         lists.length > 0 &&
         lists.map((list, index) => {
-          let dayToDisplay;
-          if (index === 0) {
-            dayToDisplay = currentDay;
-          } else {
-            const nextDayIndex = (index + index) % 7;
-            dayToDisplay = daysOfWeek[nextDayIndex];
-          }
+          const dayIndex =
+            index === 0 ? currentDayIndex : getNextDayIndex(index - 1);
+          const dayToDisplay = daysOfWeek[dayIndex];
+
           if (index === 0 || (index + 1) % 8 === 0) {
             return (
               <div
@@ -51,11 +51,14 @@ const WeatherLists = ({ lists }) => {
                 className={css({
                   color: "white",
                   display: "none",
+                  pl: "15px",
                   sm: { display: "block" },
                 })}
               >
-                <div>{dayToDisplay}</div>
-                {displayIcons[list.weather[0].description.replace(/\s+/g, "")]}
+                {dayToDisplay}
+                <div className={css({ pt: "5px" })}>
+                  {dayIcons[list.weather[0].description.replace(/\s+/g, "")]}
+                </div>
               </div>
             );
           } else {
