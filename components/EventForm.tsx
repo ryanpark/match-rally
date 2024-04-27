@@ -1,11 +1,11 @@
 // @ts-nocheck
 "use client";
 import { useState } from "react";
+import { useSession, signIn } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
 import * as z from "zod";
 import { Box } from "@shadow-panda/styled-system/jsx";
 import { css } from "@shadow-panda/styled-system/css";
@@ -68,6 +68,7 @@ export default function EventForm({ setModal }) {
   });
 
   const { data: session, status } = useSession();
+  const notSignIn = session === null;
 
   async function onSubmit(formData) {
     console.log("Form data:", formData);
@@ -86,6 +87,7 @@ export default function EventForm({ setModal }) {
     setModal(submit);
   }
   if (error) return "Something went wrong, Please try again";
+
   return (
     <Form {...form}>
       {loading && (
@@ -98,6 +100,19 @@ export default function EventForm({ setModal }) {
           onSubmit={form.handleSubmit(onSubmit)}
           className={css({ display: "flex", flexDir: "column", gap: "8" })}
         >
+          {notSignIn && (
+            <p>
+              Please{" "}
+              <a
+                href="#"
+                className={css({ textDecoration: "underline" })}
+                onClick={() => signIn()}
+              >
+                Sign in
+              </a>{" "}
+              to post a match
+            </p>
+          )}
           <FormField
             control={form.control}
             name="date"
@@ -232,7 +247,22 @@ export default function EventForm({ setModal }) {
               </FormItem>
             )}
           />
-          <Button type="submit" alignSelf="flex-start">
+
+          {notSignIn && (
+            <p>
+              Please{" "}
+              <a
+                href="#"
+                className={css({ textDecoration: "underline" })}
+                onClick={() => signIn()}
+              >
+                Sign in
+              </a>{" "}
+              to post a match
+            </p>
+          )}
+
+          <Button type="submit" alignSelf="flex-start" disabled={notSignIn}>
             Submit
           </Button>
         </form>

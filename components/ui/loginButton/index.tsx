@@ -12,14 +12,23 @@ export default function FacebookLogin() {
           {session?.user?.email}
         </a>
 
-        <button onClick={() => signOut()}></button>
+        <button onClick={() => signOut()}>Sign Out</button>
       </>
     );
   }
   return (
     <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <a
+        href="#"
+        className={css({
+          color: "white",
+          paddingRight: "5px",
+          textDecoration: "underline",
+        })}
+        onClick={() => signIn()}
+      >
+        Sign in
+      </a>
     </>
   );
 }

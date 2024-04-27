@@ -67,6 +67,15 @@ html,
   font-size: 1.25em;
 }
 
+.fc .fc-toolbar {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.fc-toolbar-chunk {
+  display: flex;
+}
+
 .fc .fc-toolbar.fc-header-toolbar {
   margin-bottom: 0.5em;
 }
@@ -90,6 +99,8 @@ html,
 
   .dialog__trigger {
     width: 100%;
+    background: #b9e506;
+    border-radius: 5px;
   }
 }
 .embla {

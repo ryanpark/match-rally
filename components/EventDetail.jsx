@@ -13,17 +13,16 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "./ui/form";
 import postComment from "../actions/postComment";
 import sendEmail from "../actions/sendEmail";
-import { Box, Circle } from "@shadow-panda/styled-system/jsx";
+import { Box, Circle, Grid } from "@shadow-panda/styled-system/jsx";
 import { css } from "@shadow-panda/styled-system/css";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import Spinner from "@atlaskit/spinner";
 import { CircleUserRound } from "lucide-react";
 
@@ -68,9 +67,15 @@ export default function EventDetails({ event }) {
   if (error) return "Something went wrong, Please try again";
   return (
     <Dialog>
-      <DialogTrigger>
-        <Box display="flex" alignItems="center">
-          <Circle size="2" bg="yellow" mr="2" ml="2" /> {title || "title"}
+      <DialogTrigger className={css({ width: "100%" })}>
+        <Box
+          display="flex"
+          alignItems="center"
+          width="100%"
+          background={"greeny"}
+          borderRadius={"5px"}
+        >
+          <Circle size="2" bg="blue" mr="2" ml="2" /> {title || "title"}
         </Box>
       </DialogTrigger>
       <DialogContent>
@@ -102,27 +107,56 @@ export default function EventDetails({ event }) {
 
             {comments?.map((item, index) => (
               <div key={index}>
-                <Box
-                  display="flex"
-                  alignItems="center"
+                <Grid
                   gap="2"
                   paddingTop="10px"
+                  gridTemplateColumns={"1fr 2fr 8fr"}
                 >
-                  <CircleUserRound /> {item.user}
+                  <CircleUserRound size="20" />
+                  <div>{item.user}</div>
                   <Box
                     background="white"
                     color="black"
                     padding="3"
                     borderRadius="5"
+                    className={css({
+                      position: "relative",
+                      ml: "4px",
+                      _after: {
+                        display: "block",
+                        width: "0",
+                        left: "-14px",
+                        position: "absolute",
+                        top: "calc(50% - 7px)",
+                        content: '""',
+                        border: "7px solid transparent",
+                        borderLeft: "0",
+                        borderRightColor: "white",
+                      },
+                    })}
                   >
                     {item.comment}
                   </Box>
-                </Box>
+                </Grid>
               </div>
             ))}
           </DialogDescription>
         </DialogHeader>
-        {!userName && <div>Please login to make a comment</div>}
+        {!userName && (
+          <div>
+            Please{" "}
+            <a
+              className={css({
+                textDecoration: "underline",
+                cursor: "pointer",
+              })}
+              onClick={() => signIn()}
+            >
+              login
+            </a>{" "}
+            to make a comment
+          </div>
+        )}
 
         {loading && (
           <Box align="center" padding="10">
@@ -130,7 +164,7 @@ export default function EventDetails({ event }) {
           </Box>
         )}
         {!loading && submit && <p>Thank you. Your comment has been posted</p>}
-        {userName && !loading && !submit && (
+        {!loading && !submit && (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
@@ -153,7 +187,9 @@ export default function EventDetails({ event }) {
                 )}
               />
               <Box display="flex" justifyContent="flex-end">
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={!userName}>
+                  Submit
+                </Button>
               </Box>
             </form>
           </Form>
