@@ -1,7 +1,6 @@
 import Head from "next/head";
 import clientPromise from "../lib/mongodb";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
-import Example from "../components/EventDetail";
 type ConnectionStatus = {
   isConnected: boolean;
 };
@@ -42,7 +41,6 @@ export default function Home({
       </Head>
 
       <main>
-        <Example />
         <h1 className="title">
           'isConnected' {isConnected} Welcome to{" "}
           <a href="https://nextjs.org">Next.js with MongoDB!</a>
