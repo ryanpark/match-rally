@@ -2,6 +2,7 @@
 "use client";
 import { useState } from "react";
 import { useSession, signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -11,7 +12,6 @@ import { Box } from "@shadow-panda/styled-system/jsx";
 import { css } from "@shadow-panda/styled-system/css";
 import { icon } from "@shadow-panda/styled-system/recipes";
 import Spinner from "@atlaskit/spinner";
-
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import {
@@ -55,11 +55,13 @@ const formSchema = z.object({
 });
 
 export default function EventForm({ setModal }) {
-  // const form = useForm();
+  const router = useRouter();
   const [submit, setSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -80,6 +82,7 @@ export default function EventForm({ setModal }) {
       setError(true);
     } else {
       setSubmit(true);
+      refreshData();
     }
     setLoading(false);
   }

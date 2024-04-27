@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import {
   Dialog,
   DialogContent,
@@ -32,6 +33,8 @@ export default function EventDetails({ event }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { data: session, status } = useSession();
+  const router = useRouter();
+
   const {
     _id: userId,
     comments,
@@ -44,6 +47,9 @@ export default function EventDetails({ event }) {
   {};
   const userName = session?.user.name;
   const title = event?.info?.event?.title || event?.info?.def.title || "title";
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
 
   async function onSubmit(comment) {
     if (comment && userName) {
@@ -61,6 +67,7 @@ export default function EventDetails({ event }) {
         setLoading(false);
         setSubmit(true);
         sendEmail();
+        refreshData();
       }
     }
   }
@@ -125,7 +132,7 @@ export default function EventDetails({ event }) {
                       _after: {
                         display: "block",
                         width: "0",
-                        left: "-14px",
+                        left: "-7px",
                         position: "absolute",
                         top: "calc(50% - 7px)",
                         content: '""',
@@ -160,7 +167,7 @@ export default function EventDetails({ event }) {
 
         {loading && (
           <Box align="center" padding="10">
-            <Spinner interactionName="load" size="large" />
+            <Spinner interactionName="load" size="large" color="white" />
           </Box>
         )}
         {!loading && submit && <p>Thank you. Your comment has been posted</p>}
