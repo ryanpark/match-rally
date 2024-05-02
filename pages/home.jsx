@@ -1,4 +1,5 @@
 import React from "react";
+import { Raleway } from "next/font/google";
 import { css, cva } from "@shadow-panda/styled-system/css";
 import HomeCarousel from "../components/HomeCarousel";
 
@@ -13,6 +14,11 @@ const link = cva({
   },
 });
 
+const raleway = Raleway({
+  weight: "900",
+  subsets: ["latin"],
+});
+
 export default function Home() {
   return (
     <div
@@ -20,6 +26,12 @@ export default function Home() {
         bg: "blue",
       })}
     >
+      <div
+        className={css({
+          bg: "greeny",
+          height: "10px",
+        })}
+      ></div>
       <div
         className={css({
           bg: "blue",
@@ -95,28 +107,65 @@ export default function Home() {
             </ul>
           </nav>
         </div>
-        <div
-          className={css({
-            sm: {
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            },
-
-            display: "block",
-            pt: "30px",
-          })}
-        ></div>
 
         <div
           className={css({
-            pt: "30px",
+            pt: "0px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            sm: { pt: "60px" },
           })}
         >
+          <h1
+            className={css({
+              sm: { fontSize: "3.94em" },
+              fontSize: "2.94em",
+              pt: "30px",
+              lineHeight: "1.1em",
+              textAlign: "left",
+              sm: { textAlign: "center" },
+              fontWeight: "light",
+              mb: "100px",
+            })}
+          >
+            <span className={raleway.className}>
+              <span
+                className={css({
+                  color: "greeny",
+                })}
+              >
+                Connect
+              </span>{" "}
+              and <br />
+              <span
+                className={css({
+                  color: "darkBlue",
+                })}
+              >
+                Play{" "}
+              </span>{" "}
+              Tennis{" "}
+              <span
+                className={css({
+                  fontSize: "0.84em",
+                })}
+              >
+                🎾
+              </span>{" "}
+              <br />
+              with Your{" "}
+              <span
+                className={css({
+                  color: "black",
+                })}
+              >
+                Perfect Match !
+              </span>{" "}
+            </span>
+          </h1>
           <HomeCarousel />
+
           <div
             className={css({
               display: "flex",
@@ -130,50 +179,7 @@ export default function Home() {
               alt="Match Points"
             />
           </div>
-          <h1
-            className={css({
-              sm: { fontSize: "3.94em" },
-              fontSize: "2.94em",
-              pt: "30px",
-              lineHeight: "1.2em",
-              textAlign: "center",
-              fontWeight: "light",
-            })}
-          >
-            <span
-              className={css({
-                color: "greeny",
-              })}
-            >
-              Connect
-            </span>{" "}
-            and <br />
-            <span
-              className={css({
-                color: "darkBlue",
-              })}
-            >
-              Play{" "}
-            </span>{" "}
-            Tennis{" "}
-            <span
-              className={css({
-                fontSize: "0.54em",
-              })}
-            >
-              🎾
-            </span>{" "}
-            <br />
-            with Your{" "}
-            <span
-              className={css({
-                color: "black",
-              })}
-            >
-              Perfect Match !
-            </span>{" "}
-            <br />
-          </h1>
+
           <div
             className={css({
               display: "flex",
@@ -184,7 +190,7 @@ export default function Home() {
               className={css({
                 sm: { textAlign: "left" },
                 textAlign: "center",
-                fontSize: "1.1em",
+                fontSize: "1.2em",
                 mt: "50px",
                 "& li": {
                   pb: "10px",

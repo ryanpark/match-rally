@@ -64,6 +64,10 @@ html,
   .fc .fc-toolbar.fc-header-toolbar {
     margin-bottom: 1.5em;
   }
+  .fc-toolbar-chunk:last-child {
+    display: block !important;
+    text-align: right;
+  }
 }
 .fc .fc-toolbar-title {
   font-size: 1.25em;
@@ -78,14 +82,18 @@ html,
   display: flex;
 }
 
+.fc-toolbar-chunk:last-child {
+  display: flex;
+}
+
 .fc .fc-toolbar.fc-header-toolbar {
   margin-bottom: 0.5em;
 }
 
-.fc-toolbar-chunk .fc-cityName-button {
+.fc .fc-button-group > .fc-button {
   border: 1px solid white;
 }
-.fc-toolbar-chunk .fc-cityName-button:hover {
+.fc .fc-button-group > .fc-button {
   border: 1px solid white;
 }
 .fc-button {

@@ -37,7 +37,7 @@ export default defineConfig({
           darkBlue: { value: "#10588C" },
         },
         fonts: {
-          body: { value: "system-ui, sans-serif" },
+          body: { value: "Inter, system-ui, sans-serif" },
         },
       },
     },
