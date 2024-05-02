@@ -63,6 +63,13 @@ export default function Calendar({ events, city }) {
     >
       <div
         className={css({
+          bg: "greeny",
+          height: "10px",
+          mb: "10px",
+        })}
+      ></div>
+      <div
+        className={css({
           bg: "brand",
 
           maxWidth: "1320px",
