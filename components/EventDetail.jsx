@@ -183,7 +183,8 @@ export default function EventDetails({ event }) {
                       <Textarea
                         placeholder="Leave your comment here"
                         resize="none"
-                        autofocus="false"
+                        autoFocus={false}
+                        readOnly={!userName}
                         {...field}
                       />
                     </FormControl>
