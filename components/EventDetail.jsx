@@ -94,61 +94,61 @@ export default function EventDetails({ event }) {
             </p>
           </DialogTitle>
           <hr />
-          <DialogDescription>
-            <p className={css({ padding: "10px 0 10px 0" })}>
-              Where{" "}
-              <span className={css({ fontWeight: "bold" })}>
-                {event?.info?.event?.title}
-              </span>
-            </p>
-            <p className={css({ padding: "10px 0 10px 0" })}>
-              Who <span className={css({ fontWeight: "bold" })}>{user}</span>
-            </p>
-            <p className={css({ padding: "10px 0 10px 0" })}>
-              When <span className={css({ fontWeight: "bold" })}>{time}</span>
-            </p>
-            <p className={css({ padding: "10px 0 10px 0" })}>
-              Level <span className={css({ fontWeight: "bold" })}>{level}</span>
-            </p>
-            <p className={css({ padding: "10px 0 10px 0" })}>{message}</p>
-
-            {comments?.map((item, index) => (
-              <div key={index}>
-                <Grid
-                  gap="2"
-                  paddingTop="10px"
-                  gridTemplateColumns={"1fr 2fr 8fr"}
-                >
-                  <CircleUserRound size="20" />
-                  <div>{item.user}</div>
-                  <Box
-                    background="white"
-                    color="black"
-                    padding="3"
-                    borderRadius="5"
-                    className={css({
-                      position: "relative",
-                      ml: "4px",
-                      _after: {
-                        display: "block",
-                        width: "0",
-                        left: "-7px",
-                        position: "absolute",
-                        top: "calc(50% - 7px)",
-                        content: '""',
-                        border: "7px solid transparent",
-                        borderLeft: "0",
-                        borderRightColor: "white",
-                      },
-                    })}
-                  >
-                    {item.comment}
-                  </Box>
-                </Grid>
-              </div>
-            ))}
-          </DialogDescription>
         </DialogHeader>
+        <DialogDescription>
+          <p className={css({ padding: "10px 0 10px 0" })}>
+            Where{" "}
+            <span className={css({ fontWeight: "bold" })}>
+              {event?.info?.event?.title}
+            </span>
+          </p>
+          <p className={css({ padding: "10px 0 10px 0" })}>
+            Who <span className={css({ fontWeight: "bold" })}>{user}</span>
+          </p>
+          <p className={css({ padding: "10px 0 10px 0" })}>
+            When <span className={css({ fontWeight: "bold" })}>{time}</span>
+          </p>
+          <p className={css({ padding: "10px 0 10px 0" })}>
+            Level <span className={css({ fontWeight: "bold" })}>{level}</span>
+          </p>
+          <p className={css({ padding: "10px 0 10px 0" })}>{message}</p>
+
+          {comments?.map((item, index) => (
+            <div key={index}>
+              <Grid
+                gap="2"
+                paddingTop="10px"
+                gridTemplateColumns={"1fr 2fr 8fr"}
+              >
+                <CircleUserRound size="20" />
+                <div>{item.user}</div>
+                <Box
+                  background="white"
+                  color="black"
+                  padding="3"
+                  borderRadius="5"
+                  className={css({
+                    position: "relative",
+                    ml: "4px",
+                    _after: {
+                      display: "block",
+                      width: "0",
+                      left: "-7px",
+                      position: "absolute",
+                      top: "calc(50% - 7px)",
+                      content: '""',
+                      border: "7px solid transparent",
+                      borderLeft: "0",
+                      borderRightColor: "white",
+                    },
+                  })}
+                >
+                  {item.comment}
+                </Box>
+              </Grid>
+            </div>
+          ))}
+        </DialogDescription>
         {!userName && (
           <div>
             Please{" "}
@@ -183,6 +183,7 @@ export default function EventDetails({ event }) {
                       <Textarea
                         placeholder="Leave your comment here"
                         resize="none"
+                        autofocus="false"
                         {...field}
                       />
                     </FormControl>

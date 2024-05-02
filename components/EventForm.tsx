@@ -242,6 +242,7 @@ export default function EventForm({ setModal }) {
                   <Textarea
                     placeholder="Eg: Prefer play single"
                     resize="none"
+                    autofocus="false"
                     {...field}
                   />
                 </FormControl>

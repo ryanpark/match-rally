@@ -23,6 +23,8 @@
 .dialog__content {
   background: #27ae60;
   color: #fff;
+  max-height: calc(100% - 64px);
+  overflow-y: auto;
 }
 .dialog__description {
   color: #fff;

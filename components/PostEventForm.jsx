@@ -40,13 +40,13 @@ export default function PostEventForm() {
               🎾 Share your match and let the crowd join in! 🧑👩
             </h1>
           </DialogTitle>
-          <hr />
-          <div className={css({ padding: "15px 0 10px 0" })}>
-            <DialogDescription>
-              <EventForm setModal={setModal} />
-            </DialogDescription>
-          </div>
         </DialogHeader>
+        <hr />
+        <div className={css({ padding: "15px 0 10px 0" })}>
+          <DialogDescription>
+            <EventForm setModal={setModal} />
+          </DialogDescription>
+        </div>
       </DialogContent>
     </Dialog>
   );
