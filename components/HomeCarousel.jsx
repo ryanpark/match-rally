@@ -10,7 +10,7 @@ const HomeCarousel = () => {
     <div className="embla" ref={emblaRef}>
       <div className="embla__container">
         <div className="embla__slide">
-          <img
+          <Image
             src="/heros/hero1.png"
             width={400}
             height={300}
@@ -18,7 +18,7 @@ const HomeCarousel = () => {
           />
         </div>
         <div className="embla__slide">
-          <img
+          <Image
             src="/heros/hero2.png"
             width={400}
             height={300}
@@ -26,7 +26,7 @@ const HomeCarousel = () => {
           />
         </div>
         <div className="embla__slide">
-          <img
+          <Image
             src="/heros/hero3.png"
             width={400}
             height={300}
@@ -34,7 +34,7 @@ const HomeCarousel = () => {
           />
         </div>
         <div className="embla__slide">
-          <img
+          <Image
             src="/heros/hero4.png"
             width={400}
             height={300}
@@ -42,7 +42,7 @@ const HomeCarousel = () => {
           />
         </div>
         <div className="embla__slide">
-          <img
+          <Image
             src="/heros/hero5.png"
             width={400}
             height={300}
@@ -50,7 +50,7 @@ const HomeCarousel = () => {
           />
         </div>
         <div className="embla__slide">
-          <img
+          <Image
             src="/heros/hero6.png"
             width={400}
             height={300}
@@ -58,7 +58,7 @@ const HomeCarousel = () => {
           />
         </div>
         <div className="embla__slide">
-          <img
+          <Image
             src="/heros/hero7.png"
             width={400}
             height={300}

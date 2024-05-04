@@ -71,7 +71,6 @@ export default function Calendar({ events, city }) {
       <div
         className={css({
           bg: "brand",
-
           maxWidth: "1320px",
           margin: "0 auto",
           color: "white",

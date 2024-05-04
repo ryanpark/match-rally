@@ -46,7 +46,7 @@ export default function EventDetails({ event }) {
   event?.info?.def?.extendedProps ||
   {};
   const userName = session?.user.name;
-  const title = event?.info?.event?.title || event?.info?.def.title || "title";
+  const title = event?.info?.event?.title || event?.info?.def?.title || "title";
   const refreshData = () => {
     router.replace(router.asPath);
   };
