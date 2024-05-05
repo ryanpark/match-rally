@@ -74,8 +74,6 @@ function CustomView(props) {
     activeRange: { start, end },
   } = dateProfile;
 
-  console.log(segs);
-
   return (
     <>
       <DateRange startDate={start} endDate={end} events={segs} />
