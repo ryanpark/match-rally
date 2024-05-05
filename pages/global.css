@@ -123,3 +123,11 @@ html,
   flex: 0 0 300px;
   min-width: 0;
 }
+.formMessage {
+  display: none;
+}
+
+.text_destructive {
+  font-weight: bold;
+  color: yellow;
+}

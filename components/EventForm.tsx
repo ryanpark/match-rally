@@ -52,6 +52,7 @@ const formSchema = z.object({
   level: z.string().min(2, {
     level: "level must be selected",
   }),
+  message: z.string().min(2).optional(),
 });
 
 export default function EventForm({ setModal }) {
