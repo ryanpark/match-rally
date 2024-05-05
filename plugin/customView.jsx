@@ -24,9 +24,9 @@ const DateRange = ({ startDate, endDate, events }) => {
       if (eventDate.toDateString() === date.toDateString()) {
         const info = event;
         return (
-          <>
+          <Box mb="15px">
             <EventDetails event={{ info }} />
-          </>
+          </Box>
         );
       }
     });

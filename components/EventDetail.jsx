@@ -112,42 +112,74 @@ export default function EventDetails({ event }) {
             Level <span className={css({ fontWeight: "bold" })}>{level}</span>
           </p>
           <p className={css({ padding: "10px 0 10px 0" })}>{message}</p>
-
-          {comments?.map((item, index) => (
-            <div key={index}>
-              <Grid
-                gap="2"
-                paddingTop="10px"
-                gridTemplateColumns={"1fr 2fr 8fr"}
-              >
-                <CircleUserRound size="20" />
-                <div>{item.user}</div>
-                <Box
-                  background="white"
-                  color="black"
-                  padding="3"
-                  borderRadius="5"
+          <div>
+            {comments?.map((item, index) => {
+              const isWriter = item.user === user; // Move variable declaration here
+              return (
+                <div
+                  key={index}
                   className={css({
-                    position: "relative",
-                    ml: "4px",
-                    _after: {
-                      display: "block",
-                      width: "0",
-                      left: "-7px",
-                      position: "absolute",
-                      top: "calc(50% - 7px)",
-                      content: '""',
-                      border: "7px solid transparent",
-                      borderLeft: "0",
-                      borderRightColor: "white",
-                    },
+                    pb: "20px",
                   })}
                 >
-                  {item.comment}
-                </Box>
-              </Grid>
-            </div>
-          ))}
+                  <Grid
+                    gap="2"
+                    paddingTop="10px"
+                    gridTemplateColumns={
+                      isWriter ? "1fr 2fr 8fr" : "8fr 2fr 1fr"
+                    }
+                  >
+                    <CircleUserRound
+                      size="20"
+                      className={css({ order: !isWriter && "3" })}
+                    />
+                    <div className={css({ order: !isWriter && "2" })}>
+                      {item.user}
+                    </div>
+
+                    <Box
+                      background="white"
+                      color="black"
+                      padding="3"
+                      borderRadius="5"
+                      {...(isWriter
+                        ? { "data-user": "writer" }
+                        : { "data-user": "guest" })}
+                      className={css({
+                        position: "relative",
+                        order: !isWriter && "1",
+                        ml: "4px",
+                        "&[data-user=writer]": {
+                          _after: {
+                            left: "-7px",
+                            borderLeft: "0",
+                            borderRightColor: "white",
+                          },
+                        },
+                        "&[data-user=guest]": {
+                          _after: {
+                            right: "-7px",
+                            borderRight: "0",
+                            borderLeftColor: "white",
+                          },
+                        },
+                        _after: {
+                          display: "block",
+                          width: "0",
+                          position: "absolute",
+                          top: "calc(50% - 7px)",
+                          content: '""',
+                          border: "7px solid transparent",
+                        },
+                      })}
+                    >
+                      {item.comment}
+                    </Box>
+                  </Grid>
+                </div>
+              );
+            })}
+          </div>
         </DialogDescription>
         {!userName && (
           <div>
