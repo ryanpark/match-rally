@@ -111,7 +111,36 @@ export default function EventDetails({ event }) {
           <p className={css({ padding: "10px 0 10px 0" })}>
             Level <span className={css({ fontWeight: "bold" })}>{level}</span>
           </p>
-          <p className={css({ padding: "10px 0 10px 0" })}>{message}</p>
+          {message && (
+            <Grid gap="2" paddingTop="10px" gridTemplateColumns={"1fr 2fr 8fr"}>
+              <CircleUserRound size="20" />
+              <div>{user}</div>
+              <Box
+                background="white"
+                color="black"
+                padding="3"
+                borderRadius="5"
+                className={css({
+                  position: "relative",
+                  ml: "4px",
+
+                  _after: {
+                    display: "block",
+                    width: "0",
+                    position: "absolute",
+                    top: "calc(50% - 7px)",
+                    content: '""',
+                    border: "7px solid transparent",
+                    left: "-7px",
+                    borderLeft: "0",
+                    borderRightColor: "white",
+                  },
+                })}
+              >
+                {message}
+              </Box>
+            </Grid>
+          )}
           <div>
             {comments?.map((item, index) => {
               const isWriter = item.user === user; // Move variable declaration here
