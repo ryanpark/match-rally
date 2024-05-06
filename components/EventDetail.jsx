@@ -160,7 +160,12 @@ export default function EventDetails({ event }) {
                       size="20"
                       className={css({ order: !isWriter && "3" })}
                     />
-                    <div className={css({ order: !isWriter && "2" })}>
+                    <div
+                      className={css({
+                        order: !isWriter && "2",
+                        pl: !isWriter && "12px",
+                      })}
+                    >
                       {item.user}
                     </div>
 
@@ -169,6 +174,7 @@ export default function EventDetails({ event }) {
                       color="black"
                       padding="3"
                       borderRadius="5"
+                      minWidth="100%"
                       {...(isWriter
                         ? { "data-user": "writer" }
                         : { "data-user": "guest" })}
