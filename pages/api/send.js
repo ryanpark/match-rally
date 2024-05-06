@@ -5,11 +5,12 @@ import { Resend } from "resend";
 const resend = new Resend("re_2eA4to9L_N3mdYEfxBoBt56qGjxboXPXt");
 
 export default async (req, res) => {
+  const { userName, email } = req.body;
   const { data, error } = await resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
-    to: ["ryan81.park@gmail.com"],
-    subject: "Hello world",
-    react: EmailTemplate({ firstName: "Ryan Park" }),
+    from: "Match Points 🎾 <onboarding@resend.dev>",
+    to: [email],
+    subject: "👋 Hey, Someone has left a comment on your Match Points post 🎾",
+    react: EmailTemplate({ firstName: userName }),
   });
 
   if (error) {

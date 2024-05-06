@@ -1,7 +1,11 @@
-const sendEmail = async () => {
+const sendEmail = async ({ userName, email }) => {
   try {
     const response = await fetch("/api/send", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userName, email }),
     });
 
     if (!response.ok) {

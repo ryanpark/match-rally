@@ -46,6 +46,7 @@ export default function EventDetails({ event }) {
   event?.info?.def?.extendedProps ||
   {};
   const userName = session?.user.name;
+  const email = session?.user.email;
   const title = event?.info?.event?.title || event?.info?.def?.title || "title";
   const refreshData = () => {
     router.replace(router.asPath);
@@ -66,7 +67,7 @@ export default function EventDetails({ event }) {
       if (result.success) {
         setLoading(false);
         setSubmit(true);
-        sendEmail();
+        sendEmail({ userName, email });
         refreshData();
       }
     }
@@ -82,7 +83,10 @@ export default function EventDetails({ event }) {
           background={"greeny"}
           borderRadius={"5px"}
         >
-          <Circle size="2" bg="blue" mr="2" ml="2" /> {title || "title"}
+          <Circle size="2" bg="blue" mr="2" ml="2" />
+          <div className={css({ whiteSpace: "normal", textAlign: "left" })}>
+            {title || "title"}
+          </div>
         </Box>
       </DialogTrigger>
       <DialogContent>
