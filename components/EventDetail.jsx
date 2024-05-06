@@ -97,10 +97,7 @@ export default function EventDetails({ event }) {
         </DialogHeader>
         <DialogDescription>
           <p className={css({ padding: "10px 0 10px 0" })}>
-            Where{" "}
-            <span className={css({ fontWeight: "bold" })}>
-              {event?.info?.event?.title}
-            </span>
+            Where <span className={css({ fontWeight: "bold" })}>{title}</span>
           </p>
           <p className={css({ padding: "10px 0 10px 0" })}>
             Who <span className={css({ fontWeight: "bold" })}>{user}</span>
@@ -149,6 +146,7 @@ export default function EventDetails({ event }) {
                   key={index}
                   className={css({
                     pb: "20px",
+                    pt: "20px",
                   })}
                 >
                   <Grid

@@ -26,13 +26,6 @@ import {
 import { Textarea } from "./ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
 import addEvent from "../actions/addEvent";
 
 const formSchema = z.object({
@@ -42,9 +35,6 @@ const formSchema = z.object({
   }),
   location: z.string().min(2, {
     location: "location must be selected",
-  }),
-  city: z.enum(["Sydney", "Melbourne", "Brisbane", "Perth"], {
-    city: "city must be selected",
   }),
   time: z.string().min(2, {
     time: "time must be selected",
@@ -63,6 +53,7 @@ export default function EventForm({ setModal }) {
   const refreshData = () => {
     router.replace(router.asPath);
   };
+  const { city } = router?.query;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -74,10 +65,8 @@ export default function EventForm({ setModal }) {
   const notSignIn = session === null;
 
   async function onSubmit(formData) {
-    console.log("Form data:", formData);
     setLoading(true);
-
-    formData.session = session?.user?.name;
+    formData.city = city;
     const result = await addEvent(formData);
     if (result === "error") {
       setError(true);
@@ -160,38 +149,13 @@ export default function EventForm({ setModal }) {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Which city ?</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a City" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Sydney">Sydney</SelectItem>
-                    <SelectItem value="Melbourne">Melbourne</SelectItem>
-                    <SelectItem value="Brisbane">Brisbane</SelectItem>
-                    <SelectItem value="Perth">Perth</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
 
           <FormField
             control={form.control}
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Where do you want to play ?</FormLabel>
+                <FormLabel>Where do you want to play in {city}?</FormLabel>
                 <FormControl>
                   <Input placeholder="Eg: Chatswood" {...field} />
                 </FormControl>
