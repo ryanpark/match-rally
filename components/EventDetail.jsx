@@ -59,6 +59,7 @@ export default function EventDetails({ event }) {
         comment,
         userId,
         userName,
+        email,
       });
 
       if (result.error) {
