@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { title, start, city, time, user, message, level } = req.body;
+    const { title, start, city, time, user, message, level, email } = req.body;
 
     const client = new MongoClient(process.env.MONGODB_URI, {
       useNewUrlParser: true,
@@ -24,6 +24,7 @@ export default async function handler(req, res) {
         user,
         message,
         level,
+        email,
       });
 
       res

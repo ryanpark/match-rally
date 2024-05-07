@@ -1,18 +1,21 @@
 const addEvent = async (event) => {
   try {
+    const { date, location, city, time, user, message, level, email } = event;
+
     let res = await fetch("/api/post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        start: event.date,
-        title: event.location,
-        city: event.city,
-        time: event.time,
-        user: event.session,
-        message: event.message,
-        level: event.level,
+        start: date,
+        title: location,
+        city: city,
+        time: time,
+        user: user,
+        message: message,
+        level: level,
+        email: email,
       }),
     });
 

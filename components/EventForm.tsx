@@ -61,12 +61,18 @@ export default function EventForm({ setModal }) {
     },
   });
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const notSignIn = session === null;
+  const { email, name } = session.user;
 
   async function onSubmit(formData) {
     setLoading(true);
-    formData.city = city;
+    formData = {
+      ...formData,
+      city: city,
+      email: email,
+      user: name,
+    };
     const result = await addEvent(formData);
     if (result === "error") {
       setError(true);
