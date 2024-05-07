@@ -2,10 +2,10 @@ import { MongoClient, ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { userId, comments, userName } = req.body; // Include 'user' in the destructured request body
+    const { userId, comments, userName, email } = req.body; // Include 'user' in the destructured request body
 
     // Validate input
-    if (!userId || !comments || !userName) {
+    if (!userId || !comments || !userName || !email) {
       return res
         .status(400)
         .json({ message: "Missing userId, user, or comment" });
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
         { _id: new ObjectId(userId) },
         {
           $push: {
-            comments: { user: userName, comment: comments },
+            comments: { user: userName, comment: comments, email: email },
           },
         } // `$push` the comment into the `comments` array
       );

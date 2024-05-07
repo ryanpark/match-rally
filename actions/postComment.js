@@ -2,6 +2,7 @@ const postComment = async (userData) => {
   const {
     userName,
     userId,
+    email,
     comment: { comment },
   } = userData;
   try {
@@ -14,6 +15,7 @@ const postComment = async (userData) => {
         userId: userId,
         comments: comment,
         userName: userName,
+        email: email,
       }),
     });
     res = await res.json();
