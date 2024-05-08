@@ -63,9 +63,9 @@ export default function EventForm({ setModal }) {
 
   const { data: session } = useSession();
   const notSignIn = session === null;
-  const { email, name } = session.user;
 
   async function onSubmit(formData) {
+    const { email, name } = session.user;
     setLoading(true);
     formData = {
       ...formData,
