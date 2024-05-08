@@ -41,16 +41,40 @@ export default function EventDetails({ event }) {
     user,
     time,
     level,
+    email,
     message,
   } = event?.info?.event?.extendedProps ||
   event?.info?.def?.extendedProps ||
   {};
   const userName = session?.user.name;
-  const email = session?.user.email;
+  const userEmail = session?.user.email;
   const title = event?.info?.event?.title || event?.info?.def?.title || "title";
   const refreshData = () => {
     router.replace(router.asPath);
   };
+  const isOrganizer = email === userEmail;
+
+  const emailCommentsList = comments?.filter((comment) => comment.email);
+
+  const emailLists =
+    (emailCommentsList &&
+      Object.values(emailCommentsList)?.filter(
+        (result) => result.email !== userEmail
+      )) ||
+    [];
+
+  const updatedEmailLists =
+    !isOrganizer && emailLists
+      ? [...emailLists, { user: user, email: email }]
+      : emailLists;
+
+  const sendingLists = updatedEmailLists.reduce((acc, item) => {
+    const isUnique = !acc.some((user) => user.email === item.email);
+    if (isUnique) {
+      return acc.concat(item);
+    }
+    return acc;
+  }, []);
 
   async function onSubmit(comment) {
     if (comment && userName) {
@@ -68,7 +92,11 @@ export default function EventDetails({ event }) {
       if (result.success) {
         setLoading(false);
         setSubmit(true);
-        sendEmail({ userName, email });
+        if (sendingLists.length > 0) {
+          // const sentEmail = await sendEmail(sendingLists);
+          console.log("will send emails");
+          // sendEmail(sendingLists);
+        }
         refreshData();
       }
     }
