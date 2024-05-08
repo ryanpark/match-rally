@@ -60,52 +60,6 @@ export default function Home() {
             sendEmail
             alt="Match Points"
           />
-          <nav className={css({ mt: "20px", sm: { mt: "0px" } })}>
-            <h1
-              className={css({
-                fontSize: "1.24em",
-                lineHeight: "2.5em",
-              })}
-            >
-              Choose your city
-            </h1>
-            <ul
-              className={css({
-                display: "flex",
-                flexWrap: "wrap",
-                "& li a": {
-                  display: "block",
-                  mb: "10px",
-                },
-              })}
-            >
-              <li>
-                <a href="/city/Sydney" className={link()}>
-                  Sydney
-                </a>
-              </li>
-              <li>
-                <a href="#" className={link()}>
-                  Melbourne
-                </a>
-              </li>
-              <li>
-                <a href="#" className={link()}>
-                  Brisbane
-                </a>
-              </li>
-              <li>
-                <a href="#" className={link()}>
-                  Perth
-                </a>
-              </li>
-              <li>
-                <a href="#" className={link()}>
-                  Canberra
-                </a>
-              </li>
-            </ul>
-          </nav>
         </div>
 
         <div
@@ -165,7 +119,60 @@ export default function Home() {
             </span>
           </h1>
           <HomeCarousel />
-
+          <div
+            className={css({
+              display: "flex",
+              justifyContent: "center",
+              pt: "50px",
+            })}
+          >
+            <nav className={css({ mt: "20px", sm: { mt: "0px" } })}>
+              <h1
+                className={css({
+                  fontSize: "1.24em",
+                  lineHeight: "2.5em",
+                })}
+              >
+                Choose your city
+              </h1>
+              <ul
+                className={css({
+                  display: "flex",
+                  flexWrap: "wrap",
+                  "& li a": {
+                    display: "block",
+                    mb: "10px",
+                  },
+                })}
+              >
+                <li>
+                  <a href="/city/Sydney" className={link()}>
+                    Sydney
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className={link()}>
+                    Melbourne
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className={link()}>
+                    Brisbane
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className={link()}>
+                    Perth
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className={link()}>
+                    Canberra
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
           <div
             className={css({
               display: "flex",
