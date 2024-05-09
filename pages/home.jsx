@@ -205,14 +205,14 @@ export default function Home() {
               })}
             >
               <li>
-                🤚 <strong>Share,</strong> Share Your Next Match with the
+                🤚 <strong>Step 1,</strong> Share Your Next Match with the
                 Community
               </li>
               <li>
-                💬 <strong>Connect,</strong> Connect with New Tennis Partner
+                💬 <strong>Step 2,</strong> Connect with New Tennis Partner
               </li>
               <li>
-                🎾 <strong>Enjoy,</strong> Meet Your Tennis partner & Play !
+                🎾 <strong>Step 3,</strong> Meet Your Tennis partner & Play !
               </li>
             </ul>
           </div>
