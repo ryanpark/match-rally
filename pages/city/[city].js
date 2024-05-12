@@ -83,6 +83,7 @@ export default function Calendar({ events, city }) {
           display="flex"
           justifyContent={"space-between"}
           alignItems={"center"}
+          mb="20px"
         >
           <a href="/home">
             <img
@@ -94,7 +95,7 @@ export default function Calendar({ events, city }) {
           <WeatherLists lists={weather} />
           <PostEventForm />
         </Box>
-        <Box display="flex" justifyContent={"flex-end"} mb={"2"} mt={"2"}>
+        <Box display="flex" justifyContent={"flex-end"} mb={"5"} mt={"5"}>
           <FacebookLogin />
         </Box>
         <FullCalendar

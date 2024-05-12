@@ -17,7 +17,6 @@ import {
   FormMessage,
 } from "./ui/form";
 import postComment from "../actions/postComment";
-import sendEmail from "../actions/sendEmail";
 import { Box, Circle, Grid } from "@shadow-panda/styled-system/jsx";
 import { css } from "@shadow-panda/styled-system/css";
 import { Button } from "./ui/button";

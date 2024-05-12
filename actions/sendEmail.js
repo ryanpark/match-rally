@@ -2,7 +2,6 @@ const sendEmail = async (sendingLists) => {
   try {
     for (const recipient of sendingLists) {
       const { user: userName, email } = recipient;
-      console.log(userName);
       const response = await fetch("/api/send", {
         method: "POST",
         headers: {

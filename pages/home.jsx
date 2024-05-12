@@ -133,7 +133,7 @@ export default function Home() {
                   lineHeight: "2.5em",
                 })}
               >
-                Choose your city
+                Discover Tennis Matches in Your City !
               </h1>
               <ul
                 className={css({
@@ -205,14 +205,14 @@ export default function Home() {
               })}
             >
               <li>
-                🤚 <strong>Step 1,</strong> Share Your Next Match with the
+                🤚 <strong>Step 1 </strong> Share Your Next Match with the
                 Community
               </li>
               <li>
-                💬 <strong>Step 2,</strong> Connect with New Tennis Partner
+                💬 <strong>Step 2 </strong> Connect with New Tennis Partner
               </li>
               <li>
-                🎾 <strong>Step 3,</strong> Meet Your Tennis partner & Play !
+                🎾 <strong>Step 3 </strong> Meet Your Tennis partner & Play !
               </li>
             </ul>
           </div>
