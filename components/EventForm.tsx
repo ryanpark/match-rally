@@ -42,7 +42,9 @@ const formSchema = z.object({
   level: z.string().min(2, {
     level: "level must be selected",
   }),
-  message: z.string().min(2).optional(),
+  message: z.string().min(2, {
+    level: "level must be selected",
+  }),
 });
 
 export default function EventForm({ setModal }) {
@@ -117,7 +119,7 @@ export default function EventForm({ setModal }) {
             name="date"
             render={({ field }) => (
               <FormItem display="flex" flexDir="column">
-                <FormLabel>Pick a date</FormLabel>
+                <FormLabel>Pick a date *</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -161,7 +163,7 @@ export default function EventForm({ setModal }) {
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Where do you want to play in {city}?</FormLabel>
+                <FormLabel>Where do you want to play in {city}? *</FormLabel>
                 <FormControl>
                   <Input placeholder="Eg: Chatswood" {...field} />
                 </FormControl>
@@ -176,7 +178,7 @@ export default function EventForm({ setModal }) {
             name="time"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>What time do you want to play ?</FormLabel>
+                <FormLabel>What time do you want to play ? *</FormLabel>
                 <FormControl>
                   <Input placeholder="Eg: 6: 00 pm" {...field} />
                 </FormControl>
@@ -191,7 +193,7 @@ export default function EventForm({ setModal }) {
             name="level"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>What tennis level are you?</FormLabel>
+                <FormLabel>What tennis level are you ? *</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Eg: UTR Level, Beginner, intermediate or advanced ?"
@@ -208,7 +210,7 @@ export default function EventForm({ setModal }) {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Any additional message ?</FormLabel>
+                <FormLabel>Comment *</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Eg: Prefer play single"

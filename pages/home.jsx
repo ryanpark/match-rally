@@ -151,23 +151,38 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className={link()}>
+                  <a href="/city/Melbourne" className={link()}>
                     Melbourne
                   </a>
                 </li>
                 <li>
-                  <a href="#" className={link()}>
+                  <a href="/city/Brisbane" className={link()}>
                     Brisbane
                   </a>
                 </li>
                 <li>
-                  <a href="#" className={link()}>
+                  <a href="/city/Perth" className={link()}>
                     Perth
                   </a>
                 </li>
                 <li>
-                  <a href="#" className={link()}>
+                  <a href="/city/Canberra" className={link()}>
                     Canberra
+                  </a>
+                </li>
+                <li>
+                  <a href="/city/Perth" className={link()}>
+                    Perth
+                  </a>
+                </li>
+                <li>
+                  <a href="/city/Hobart" className={link()}>
+                    Hobart
+                  </a>
+                </li>
+                <li>
+                  <a href="/city/Others" className={link()}>
+                    Others
                   </a>
                 </li>
               </ul>
