@@ -21,17 +21,53 @@ import { Box, Circle, Grid } from "@shadow-panda/styled-system/jsx";
 import { css } from "@shadow-panda/styled-system/css";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useSession, signIn } from "next-auth/react";
 import Spinner from "@atlaskit/spinner";
 import { CircleUserRound } from "lucide-react";
 
-export default function EventDetails({ event }) {
-  const form = useForm();
+interface ExtendProps {
+  _id: string;
+  comments: Array<{
+    email: string;
+    user: string;
+    comment: string;
+  }>;
+  user: string;
+  time: object;
+  email: string;
+  message: string;
+  level: string;
+}
+
+interface EventTypes {
+  event: {
+    info: {
+      event: { extendedProps: ExtendProps; title: string };
+      def: {
+        extendedProps: ExtendProps;
+        title: string;
+      };
+    };
+  };
+}
+
+interface ResultType {
+  error: boolean;
+  success: boolean;
+}
+
+interface FormTypes {
+  comment: string;
+}
+
+export default function EventDetails({ event }: EventTypes) {
+  const form = useForm<FormTypes>();
   const [submit, setSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+
   const router = useRouter();
 
   const {
@@ -45,9 +81,10 @@ export default function EventDetails({ event }) {
   } = event?.info?.event?.extendedProps ||
   event?.info?.def?.extendedProps ||
   {};
-  const userName = session?.user.name;
-  const userEmail = session?.user.email;
-  const title = event?.info?.event?.title || event?.info?.def?.title || "title";
+  const userName = session?.user?.name;
+  const userEmail = session?.user?.email;
+
+  const title = event?.info?.event?.title ?? event?.info?.def?.title ?? "title";
   const refreshData = () => {
     router.replace(router.asPath);
   };
@@ -67,7 +104,9 @@ export default function EventDetails({ event }) {
       ? [...emailLists, { user: user, email: email }]
       : emailLists;
 
-  const sendingLists = updatedEmailLists.reduce((acc, item) => {
+  const sendingLists = updatedEmailLists.reduce<
+    { email: string; user?: string }[]
+  >((acc, item) => {
     const isUnique = !acc.some((user) => user.email === item.email);
     if (isUnique) {
       return acc.concat(item);
@@ -75,10 +114,11 @@ export default function EventDetails({ event }) {
     return acc;
   }, []);
 
-  async function onSubmit(comment) {
+  const onSubmit: SubmitHandler<FormTypes> = async (data) => {
+    const { comment } = data;
     if (comment && userName) {
       setLoading(true);
-      const result = await postComment({
+      const result: ResultType = await postComment({
         comment,
         userId,
         userName,
@@ -99,7 +139,7 @@ export default function EventDetails({ event }) {
         refreshData();
       }
     }
-  }
+  };
   if (error) return "Something went wrong, Please try again";
   return (
     <Dialog>
@@ -190,12 +230,12 @@ export default function EventDetails({ event }) {
                   >
                     <CircleUserRound
                       size="20"
-                      className={css({ order: !isWriter && "3" })}
+                      className={css({ order: isWriter ? undefined : "3" })}
                     />
                     <div
                       className={css({
-                        order: !isWriter && "2",
-                        pl: !isWriter && "12px",
+                        order: isWriter ? undefined : "2",
+                        pl: isWriter ? undefined : "12px",
                       })}
                     >
                       {item.user}
@@ -212,7 +252,7 @@ export default function EventDetails({ event }) {
                         : { "data-user": "guest" })}
                       className={css({
                         position: "relative",
-                        order: !isWriter && "1",
+                        order: isWriter ? undefined : "1",
                         ml: "4px",
                         "&[data-user=writer]": {
                           _after: {
@@ -262,9 +302,9 @@ export default function EventDetails({ event }) {
           </div>
         )}
 
-        {loading && (
-          <Box align="center" padding="10">
-            <Spinner interactionName="load" size="large" color="white" />
+        {!loading && (
+          <Box display="flex" justifyContent="center" padding="10">
+            <Spinner interactionName="load" size="large" />
           </Box>
         )}
         {!loading && submit && <p>Thank you. Your comment has been posted</p>}

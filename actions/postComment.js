@@ -21,14 +21,14 @@ const postComment = async (userData) => {
     res = await res.json();
 
     if (res.error) {
-      return "error";
+      return error;
       // throw new Error(`Failed to add event: ${res.status} - ${res.statusText}`);
     }
     if (res.success) {
       return res;
     }
   } catch (error) {
-    return "error";
+    return error;
   }
 };
 

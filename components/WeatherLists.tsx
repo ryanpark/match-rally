@@ -12,7 +12,29 @@ import {
 } from "lucide-react";
 import { css } from "@shadow-panda/styled-system/css";
 
-const dayIcons = {
+interface WeatherTypes {
+  lists: Array<{
+    weather: Array<{
+      description: string;
+    }>;
+  }>;
+}
+
+type WeatherDescription =
+  | "clearsky"
+  | "fewclouds"
+  | "scatteredclouds"
+  | "brokenclouds"
+  | "overcastclouds"
+  | "showerrain"
+  | "lightrain"
+  | "rain"
+  | "thunderstorm"
+  | "snow"
+  | "mist"
+  | "moderaterain";
+
+const dayIcons: Record<WeatherDescription, JSX.Element> = {
   clearsky: <SunDim size="30" />,
   fewclouds: <CloudSun size="30" />,
   scatteredclouds: <Cloud size="30" />,
@@ -30,10 +52,10 @@ const dayIcons = {
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const currentDate = new Date();
 const currentDayIndex = currentDate.getDay();
-const getNextDayIndex = (currentIndex) =>
+const getNextDayIndex = (currentIndex: number) =>
   (currentIndex + 1) % daysOfWeek.length;
 
-const WeatherLists = ({ lists }) => {
+const WeatherLists = ({ lists }: WeatherTypes) => {
   return (
     <div className={css({ display: "flex", gap: "10px" })}>
       {lists &&
@@ -42,6 +64,10 @@ const WeatherLists = ({ lists }) => {
           const dayIndex =
             index === 0 ? currentDayIndex : getNextDayIndex(index - 1);
           const dayToDisplay = daysOfWeek[dayIndex];
+          const weatherDescription = list.weather[0].description.replace(
+            /\s+/g,
+            ""
+          ) as WeatherDescription;
 
           if (index === 0 || (index + 1) % 8 === 0) {
             return (
@@ -57,7 +83,7 @@ const WeatherLists = ({ lists }) => {
               >
                 {dayToDisplay}
                 <div className={css({ pt: "5px" })}>
-                  {dayIcons[list.weather[0].description.replace(/\s+/g, "")]}
+                  {dayIcons[weatherDescription]}
                 </div>
               </div>
             );
