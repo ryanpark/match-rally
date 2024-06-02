@@ -87,7 +87,7 @@ export default function EventForm({ setModal }) {
   if (submit) {
     setModal(submit);
   }
-  if (error) return "Something went wrong, Please try again";
+  if (error) return <div>"Something went wrong, Please try again"</div>;
 
   return (
     <Form {...form}>

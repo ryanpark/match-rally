@@ -302,7 +302,7 @@ export default function EventDetails({ event }: EventTypes) {
           </div>
         )}
 
-        {!loading && (
+        {loading && (
           <Box display="flex" justifyContent="center" padding="10">
             <Spinner interactionName="load" size="large" />
           </Box>

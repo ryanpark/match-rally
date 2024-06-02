@@ -15,7 +15,7 @@ import { Box } from "@shadow-panda/styled-system/jsx";
 
 export default function PostEventForm() {
   const [open, setOpen] = useState(false);
-  const setModal = (state) => {
+  const setModal = (state: boolean) => {
     setOpen(!state);
   };
   return (
