@@ -1,8 +1,24 @@
-const addEvent = async (event) => {
+interface EventTypes {
+  date: object;
+  location: string;
+  city: string;
+  time: object;
+  user: string;
+  message: string;
+  level: string;
+  email: string;
+}
+
+interface ResponseType {
+  error: boolean;
+  success: boolean;
+}
+
+const addEvent = async (event: EventTypes) => {
   try {
     const { date, location, city, time, user, message, level, email } = event;
 
-    let res = await fetch("/api/post", {
+    const response = await fetch("/api/post", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,16 +35,15 @@ const addEvent = async (event) => {
       }),
     });
 
-    res = await res.json();
+    let res: ResponseType = await response.json();
     if (res.error) {
-      return "error";
-      // throw new Error(`Failed to add event: ${res.status} - ${res.statusText}`);
+      throw new Error();
     }
     if (res.success) {
       return res;
     }
   } catch (error) {
-    return "error";
+    return error;
   }
 };
 

@@ -1,4 +1,18 @@
-const postComment = async (userData) => {
+interface userDataTypes {
+  userName: string;
+  userId: string;
+  email: string;
+  comment: {
+    comment: string;
+  };
+}
+
+interface ResponseType {
+  error: boolean;
+  success: boolean;
+}
+
+const postComment = async (userData: userDataTypes) => {
   const {
     userName,
     userId,
@@ -6,7 +20,7 @@ const postComment = async (userData) => {
     comment: { comment },
   } = userData;
   try {
-    let res = await fetch("/api/comment", {
+    const response = await fetch("/api/comment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,11 +32,10 @@ const postComment = async (userData) => {
         email: email,
       }),
     });
-    res = await res.json();
+    const res: ResponseType = await response.json();
 
     if (res.error) {
-      return error;
-      // throw new Error(`Failed to add event: ${res.status} - ${res.statusText}`);
+      throw new Error(`Failed to post comment`);
     }
     if (res.success) {
       return res;

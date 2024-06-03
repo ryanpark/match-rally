@@ -1,4 +1,11 @@
-const sendEmail = async (sendingLists) => {
+interface Recipient {
+  user: string;
+  email: string;
+}
+
+type SendingListsTypes = Recipient[];
+
+const sendEmail = async (sendingLists: SendingListsTypes) => {
   try {
     for (const recipient of sendingLists) {
       const { user: userName, email } = recipient;
@@ -11,13 +18,10 @@ const sendEmail = async (sendingLists) => {
       });
 
       if (!response.ok) {
-        throw new Error(
-          `Failed to send email to ${user}: ${response.statusText}`
-        );
+        throw new Error(`Failed to send email to ${response.statusText}`);
       }
 
       const data = await response.json();
-      console.log(`Email sent to ${user}:`, data);
     }
   } catch (error) {
     console.error("Error sending email:", error);
