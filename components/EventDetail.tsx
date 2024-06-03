@@ -36,7 +36,7 @@ interface ExtendProps {
   user: string;
   time: object;
   email: string;
-  message: string;
+  message?: string;
   level: string;
 }
 
@@ -58,7 +58,9 @@ interface ResultType {
 }
 
 interface FormTypes {
-  comment: string;
+  comment: {
+    comment: string;
+  };
 }
 
 export default function EventDetails({ event }: EventTypes) {
@@ -140,7 +142,7 @@ export default function EventDetails({ event }: EventTypes) {
       }
     }
   };
-  if (error) return "Something went wrong, Please try again";
+  if (error) return <div>"Something went wrong, Please try again"</div>;
   return (
     <Dialog>
       <DialogTrigger className={css({ width: "100%" })}>
@@ -323,6 +325,7 @@ export default function EventDetails({ event }: EventTypes) {
                         autoFocus={false}
                         readOnly={!userName}
                         {...field}
+                        value={field.value.comment}
                       />
                     </FormControl>
                     <FormDescription>
