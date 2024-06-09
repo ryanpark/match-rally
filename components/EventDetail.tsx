@@ -325,7 +325,7 @@ export default function EventDetails({ event }: EventTypes) {
                         autoFocus={false}
                         readOnly={!userName}
                         {...field}
-                        value={field.value.comment}
+                        value={field.value?.comment}
                       />
                     </FormControl>
                     <FormDescription>
