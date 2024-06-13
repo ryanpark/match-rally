@@ -11,14 +11,13 @@ const getWeather = async () => {
     const res: ResponseType = response && (await response.json());
 
     if (res.error) {
-      return "error";
+      throw Error;
     }
     if (res) {
       return res;
     }
-    console.log(res);
   } catch (error) {
-    return "error";
+    return error;
   }
 };
 

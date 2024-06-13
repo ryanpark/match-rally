@@ -26,7 +26,7 @@ import { useSession, signIn } from "next-auth/react";
 import Spinner from "@atlaskit/spinner";
 import { CircleUserRound } from "lucide-react";
 
-interface ExtendProps {
+export interface ExtendProps {
   _id: string;
   comments: Array<{
     email: string;
@@ -38,6 +38,9 @@ interface ExtendProps {
   email: string;
   message?: string;
   level: string;
+  range: {
+    start: Date;
+  };
 }
 
 interface EventTypes {
@@ -47,6 +50,10 @@ interface EventTypes {
       def: {
         extendedProps: ExtendProps;
         title: string;
+      };
+      range: {
+        start: Date;
+        end: Date;
       };
     };
   };

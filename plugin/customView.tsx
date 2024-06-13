@@ -1,8 +1,39 @@
 import { sliceEvents, createPlugin } from "@fullcalendar/core";
 import { Box, Grid } from "@shadow-panda/styled-system/jsx";
 import EventDetails from "../components/EventDetail";
+import type { ExtendProps } from "../components/EventDetail";
 
-const DateRange = ({ startDate, endDate, events }) => {
+interface DateRangeTypes {
+  startDate: string;
+  endDate: string;
+  events: SegsTypes[];
+}
+
+interface CustomViewProps {
+  dateProfile: {
+    activeRange: {
+      start: string;
+      end: string;
+    } | null;
+  };
+}
+
+interface SegsTypes {
+  range: {
+    start: Date;
+    end: Date;
+  };
+  event: {
+    extendedProps: ExtendProps;
+    title: string;
+  };
+  def: {
+    extendedProps: ExtendProps;
+    title: string;
+  };
+}
+
+const DateRange = ({ startDate, endDate, events }: DateRangeTypes) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
   const dates = [];
@@ -12,28 +43,21 @@ const DateRange = ({ startDate, endDate, events }) => {
   }
 
   const formattedDates = dates.map((date) => {
-    const formatter = new Intl.DateTimeFormat("en-AU", {
-      weekday: "short",
-      day: "2-digit",
-    });
-    const formattedDate = formatter.format(date);
-
     const displayEvents = events.map((event) => {
       const eventDate = new Date(event.range.start);
 
       if (eventDate.toDateString() === date.toDateString()) {
         const info = event;
         return (
-          <Box mb="15px">
+          <Box mb="15px" key={info?.event?.title}>
             <EventDetails event={{ info }} />
           </Box>
         );
       }
+      return null;
     });
-    displayEvents.unshift(formattedDate);
-    return displayEvents.filter((item, index, array) => {
-      return array.indexOf(item) === index;
-    });
+
+    return displayEvents.filter((item) => item !== null);
   });
 
   return (
@@ -62,14 +86,14 @@ const DateRange = ({ startDate, endDate, events }) => {
   );
 };
 
-function CustomView(props) {
-  let segs = sliceEvents(props, true); // allDay=true
+function CustomView(props: CustomViewProps) {
+  // @ts-ignore: idk wtf to do
+  let segs: any = sliceEvents(props, true); // allDay=true
 
-  const {
-    eventStore: { defs },
-    dateProfile,
-  } = props;
-  const events = defs;
+  const { dateProfile } = props;
+  if (!dateProfile.activeRange) {
+    return null;
+  }
   const {
     activeRange: { start, end },
   } = dateProfile;
@@ -83,6 +107,7 @@ function CustomView(props) {
 
 export default createPlugin({
   views: {
+    // @ts-ignore: idk wtf to do
     custom: CustomView,
   },
 });

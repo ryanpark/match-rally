@@ -1,19 +1,44 @@
 import React, { useRef, useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import getWeather from "../../actions/getWeather";
-import WeatherLists from "../../components/WeatherLists";
+import WeatherLists, { WeatherTypes } from "../../components/WeatherLists";
 import CustomView from "../../plugin/customView";
 import clientPromise from "../../lib/mongodb";
-import EventDetails from "../../components/EventDetail";
+import EventDetails, { ExtendProps } from "../../components/EventDetail";
 import PostEventForm from "../../components/PostEventForm";
 import FacebookLogin from "../../components/ui/loginButton";
 import { Box } from "@shadow-panda/styled-system/jsx";
 import { css } from "@shadow-panda/styled-system/css";
 
-const renderEventContent = (info) => {
+interface InfoTypes {
+  event: {
+    extendedProps: ExtendProps;
+    title: string;
+  };
+  def: {
+    extendedProps: ExtendProps;
+    title: string;
+  };
+  range: {
+    start: Date;
+    end: Date;
+  };
+}
+
+interface CalendarTypes {
+  city: string;
+  events: ExtendProps[];
+}
+
+interface ResultType {
+  list: WeatherTypes;
+  error: boolean;
+}
+const renderEventContent = (info: InfoTypes) => {
   return (
     <div>
       <EventDetails event={{ info }} />
@@ -21,10 +46,9 @@ const renderEventContent = (info) => {
   );
 };
 
-export default function Calendar({ events, city }) {
-  const calRef = useRef(null);
-  const [weather, setWeather] = useState([]);
-
+export default function Calendar({ events, city }: CalendarTypes) {
+  const calRef = useRef<any>(null);
+  const [weather, setWeather] = useState<any>([]);
   useEffect(() => {
     function handleResize() {
       const api = calRef?.current?.getApi();
@@ -43,8 +67,8 @@ export default function Calendar({ events, city }) {
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        const results = await getWeather();
-        setWeather(results.list);
+        const results = (await getWeather()) as ResultType;
+        setWeather(results?.list);
       } catch (e) {
         console.error(e);
       }
@@ -121,6 +145,7 @@ export default function Calendar({ events, city }) {
           editable={false}
           selectable={true}
           aspectRatio={1 / 1.5}
+          //@ts-ignore wtf idk
           eventContent={(info) => renderEventContent(info)}
           titleFormat={{
             month: "short",
@@ -139,11 +164,18 @@ export default function Calendar({ events, city }) {
   );
 }
 
-export const getServerSideProps = async (context) => {
+interface PageProps {
+  events: Event[];
+  city: string;
+}
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async (
+  context
+) => {
   try {
     const client = await clientPromise;
     const db = client.db("TennisMatchFinder");
-    const { city } = context.params;
+    const city = (context.params?.city as string) || "Sydney";
     const cityName = city.charAt(0).toUpperCase() + city.slice(1);
     const events = await db
       .collection("Events")
@@ -155,6 +187,6 @@ export const getServerSideProps = async (context) => {
     };
   } catch (e) {
     console.error(e);
-    return { props: { events: [] } };
+    return { props: { events: [], city: "Sydney" } };
   }
 };

@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { css } from "@shadow-panda/styled-system/css";
 
-interface WeatherTypes {
+export interface WeatherTypes {
   lists: Array<{
     weather: Array<{
       description: string;
