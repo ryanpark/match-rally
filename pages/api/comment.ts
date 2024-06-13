@@ -1,6 +1,10 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { NextApiRequest, NextApiResponse } from "next";
+import { MongoClient, ObjectId, MongoClientOptions } from "mongodb";
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === "POST") {
     const { userId, comments, userName, email } = req.body; // Include 'user' in the destructured request body
 
@@ -11,10 +15,19 @@ export default async function handler(req, res) {
         .json({ message: "Missing userId, user, or comment" });
     }
 
-    const client = new MongoClient(process.env.MONGODB_URI, {
+    const uri = process.env.MONGODB_URI;
+
+    if (!uri) {
+      return res.status(500).json({
+        message: "Database connection string is missing!",
+        error: true,
+      });
+    }
+
+    const client = new MongoClient(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    });
+    } as MongoClientOptions);
 
     try {
       await client.connect();

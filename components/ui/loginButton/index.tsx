@@ -1,4 +1,4 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { CircleUserRound } from "lucide-react";
 import {
   Dialog,
@@ -9,7 +9,6 @@ import {
   DialogTrigger,
 } from "../dialog";
 import { css } from "@shadow-panda/styled-system/css";
-import { Box } from "@shadow-panda/styled-system/jsx";
 
 export default function FacebookLogin() {
   const { data: session } = useSession();

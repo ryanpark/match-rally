@@ -1,10 +1,10 @@
-// import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { EmailTemplate } from "../../components/EmailTemplate";
 import { Resend } from "resend";
 
 const resend = new Resend("re_2eA4to9L_N3mdYEfxBoBt56qGjxboXPXt");
 
-export default async (req, res) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { userName, email } = req.body;
   const { data, error } = await resend.emails.send({
     from: "Match Points 🎾 <onboarding@resend.dev>",
